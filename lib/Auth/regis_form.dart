@@ -40,71 +40,80 @@ class RegisForm extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: Form(
-          autovalidateMode: AutovalidateMode.onUnfocus,
-          key: _key,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 16,
-            children:
-                <Widget>[
-                  Text(
-                    'Create an account',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                ] +
-                textFields +
-                [
-                  FilledButton(
-                    onPressed: () async {
-                      if (!_key.currentState!.validate()) {
-                        return;
-                      } else {
-                        if (passControl.text != checkPassControl.text) {
-                          ScaffoldMessenger.of(context).showMaterialBanner(
-                            MaterialBanner(
-                              content: Text('Passwords dont match'),
-                              actions: [
-                                FilledButton(
-                                  onPressed: () => ScaffoldMessenger.of(
-                                    context,
-                                  ).hideCurrentMaterialBanner(),
-                                  child: Text('Ok'),
+      body: Form(
+        autovalidateMode: AutovalidateMode.onUnfocus,
+        key: _key,
+        child: Center(
+          child: Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 16,
+                children:
+                    <Widget>[
+                      Text(
+                        'Create an account',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
+                    ] +
+                    textFields +
+                    [
+                      FilledButton(
+                        onPressed: () async {
+                          if (!_key.currentState!.validate()) {
+                            return;
+                          } else {
+                            if (passControl.text != checkPassControl.text) {
+                              ScaffoldMessenger.of(context).showMaterialBanner(
+                                MaterialBanner(
+                                  content: Text('Passwords dont match'),
+                                  actions: [
+                                    FilledButton(
+                                      onPressed: () => ScaffoldMessenger.of(
+                                        context,
+                                      ).hideCurrentMaterialBanner(),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              );
+                              return;
+                            }
+                            await SupaAuthClass().registrarUsuario(
+                              mailControl.text,
+                              passControl.text,
+                            );
+                            if (!context.mounted) {
+                              return;
+                            }
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text('Submit'),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 8,
+                        children: [
+                          Text('Already have an account?'),
+                          TextButton(
+                            onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SignInForm(),
+                              ),
                             ),
-                          );
-                          return;
-                        }
-                        await SupaAuthClass().registrarUsuario(
-                          mailControl.text,
-                          passControl.text,
-                        );
-                        if (!context.mounted) {
-                          return;
-                        }
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
-                      }
-                    },
-                    child: Text('Submit'),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 8,
-                    children: [
-                      Text('Already have an account?'),
-                      TextButton(
-                        onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => SignInForm()),
-                        ),
-                        child: Text('Sign in'),
+                            child: Text('Sign in'),
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                ],
+              ),
+            ),
           ),
         ),
       ),

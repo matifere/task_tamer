@@ -29,7 +29,7 @@ class _FormTextState extends State<FormText> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 500,
+      width: MediaQuery.of(context).size.width * 0.8,
       child: TextFormField(
         obscureText: iconEstado,
         controller: widget.control,
