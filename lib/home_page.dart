@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:task_tamer/Auth/supa_auth_class.dart';
 import 'package:task_tamer/landing.dart';
+import 'package:task_tamer/ollamaServ/ollama_service.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -15,18 +16,14 @@ class HomePage extends StatelessWidget {
         leading: IconButton(onPressed: () {}, icon: Icon(Icons.menu_rounded)),
       ),
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          spacing: 16,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              spacing: 16,
-              children: [TopContainer(), TopContainer()],
-            ),
-          ],
+        child: FutureBuilder(
+          future: OllamaService().obtenerRespuesta("hola? tu sabes mi nombre?"),
+          builder: (context, asyncSnapshot) {
+            if (asyncSnapshot.data == null) {
+              return CircularProgressIndicator();
+            }
+            return Text(asyncSnapshot.data ?? '');
+          },
         ),
       ),
     );
