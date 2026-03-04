@@ -1,14 +1,20 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaAuthClass {
-  final GoTrueClient auth = Supabase.instance.client.auth;
+  final SupabaseClient supa = Supabase.instance.client;
+
   Future<String> registrarUsuario(String email, String password) async {
+    final GoTrueClient auth = supa.auth;
     try {
       final AuthResponse respuesta = await auth.signUp(
         email: email,
         password: password,
       );
       if (respuesta.session != null) {
+        await supa.from('profiles').insert({
+          'id': respuesta.user?.id,
+          'username': generateUsernameFromEmail(email),
+        });
         return 'Ok';
       } else {
         return 'Error session == null';
@@ -20,7 +26,12 @@ class SupaAuthClass {
     }
   }
 
+  String generateUsernameFromEmail(String email) {
+    return email.split('@')[0];
+  }
+
   Future<String> logInUsuario(String email, String password) async {
+    final GoTrueClient auth = supa.auth;
     try {
       final AuthResponse respuesta = await auth.signInWithPassword(
         email: email,
@@ -39,6 +50,7 @@ class SupaAuthClass {
   }
 
   Future<String> logOut() async {
+    final GoTrueClient auth = supa.auth;
     try {
       await auth.signOut();
       return 'Ok';

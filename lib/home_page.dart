@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:task_tamer/Auth/supa_auth_class.dart';
 import 'package:task_tamer/landing.dart';
-import 'package:task_tamer/ollamaServ/ollama_service.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -10,21 +10,42 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Task Tamer'),
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.menu_rounded)),
-      ),
-      body: Center(
-        child: FutureBuilder(
-          future: OllamaService().obtenerRespuesta("hola? tu sabes mi nombre?"),
-          builder: (context, asyncSnapshot) {
-            if (asyncSnapshot.data == null) {
-              return CircularProgressIndicator();
-            }
-            return Text(asyncSnapshot.data ?? '');
-          },
-        ),
+    return BlocProvider(
+      create: (context) => NavStateCubit(),
+      child: BlocBuilder<NavStateCubit, int>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(title: Text('Task Tamer')),
+            body: <Widget>[
+              //TODO agregar paginas
+              Text('Home'),
+              Text('Stats'),
+              Text('Groups'),
+              Text('Settings'),
+            ][state],
+            bottomNavigationBar: NavigationBar(
+              selectedIndex: state,
+              onDestinationSelected: (value) {
+                context.read<NavStateCubit>().changeIndex(value);
+              },
+              destinations: [
+                NavigationDestination(icon: Icon(Icons.home), label: 'home'),
+                NavigationDestination(
+                  icon: Icon(Icons.query_stats),
+                  label: 'stats',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.groups),
+                  label: 'groups',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.settings),
+                  label: 'settings',
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -63,18 +84,9 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class TopContainer extends StatelessWidget {
-  const TopContainer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.3,
-        height: MediaQuery.of(context).size.width * 0.3,
-        child: Card(),
-      ),
-    );
+class NavStateCubit extends Cubit<int> {
+  NavStateCubit() : super(0);
+  void changeIndex(int index) {
+    emit(index);
   }
 }
