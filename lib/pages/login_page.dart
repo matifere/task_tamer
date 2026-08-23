@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:task_tamer/main.dart';
+import 'package:task_tamer/pages/main_layout.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,7 +17,8 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLogin = true;
 
   Future<void> _authenticate() async {
-    if (!_isLogin && _passwordController.text != _confirmPasswordController.text) {
+    if (!_isLogin &&
+        _passwordController.text != _confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('Las contraseñas no coinciden'),
@@ -30,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _isLoading = true;
     });
-    
+
     try {
       if (_isLogin) {
         await Supabase.instance.client.auth.signInWithPassword(
@@ -39,7 +40,9 @@ class _LoginPageState extends State<LoginPage> {
         );
         if (mounted) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Task Tamer')),
+            MaterialPageRoute(
+              builder: (context) => const MainLayout(),
+            ),
           );
         }
       } else {
@@ -50,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
         if (mounted && _isLogin == false) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('Registro exitoso. Revisa tu correo electrónico.'),
+              content: const Text('Registro exitoso.'),
               backgroundColor: Theme.of(context).colorScheme.primary,
             ),
           );
@@ -135,7 +138,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      _isLogin ? 'Inicia sesión para continuar' : 'Regístrate para organizar tus tareas',
+                      _isLogin
+                          ? 'Inicia sesión para continuar'
+                          : 'Regístrate para organizar tus tareas',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
@@ -152,15 +157,24 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   labelText: 'Correo electrónico',
                   labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
-                  prefixIcon: Icon(Icons.email_outlined, color: colorScheme.primary),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  prefixIcon: Icon(
+                    Icons.email_outlined,
+                    color: colorScheme.primary,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
                     borderSide: BorderSide(color: colorScheme.outline),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide(color: colorScheme.primary, width: 2),
+                    borderSide: BorderSide(
+                      color: colorScheme.primary,
+                      width: 2,
+                    ),
                   ),
                   filled: true,
                   fillColor: colorScheme.surfaceContainerHighest.withAlpha(76),
@@ -174,15 +188,24 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   labelText: 'Contraseña',
                   labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
-                  prefixIcon: Icon(Icons.lock_outline, color: colorScheme.primary),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  prefixIcon: Icon(
+                    Icons.lock_outline,
+                    color: colorScheme.primary,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
                     borderSide: BorderSide(color: colorScheme.outline),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide(color: colorScheme.primary, width: 2),
+                    borderSide: BorderSide(
+                      color: colorScheme.primary,
+                      width: 2,
+                    ),
                   ),
                   filled: true,
                   fillColor: colorScheme.surfaceContainerHighest.withAlpha(76),
@@ -203,19 +226,33 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(color: colorScheme.onSurface),
                             decoration: InputDecoration(
                               labelText: 'Confirmar contraseña',
-                              labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
-                              prefixIcon: Icon(Icons.lock_clock_outlined, color: colorScheme.primary),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                              labelStyle: TextStyle(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                              prefixIcon: Icon(
+                                Icons.lock_clock_outlined,
+                                color: colorScheme.primary,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 20,
+                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(24),
-                                borderSide: BorderSide(color: colorScheme.outline),
+                                borderSide: BorderSide(
+                                  color: colorScheme.outline,
+                                ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(24),
-                                borderSide: BorderSide(color: colorScheme.primary, width: 2),
+                                borderSide: BorderSide(
+                                  color: colorScheme.primary,
+                                  width: 2,
+                                ),
                               ),
                               filled: true,
-                              fillColor: colorScheme.surfaceContainerHighest.withAlpha(76),
+                              fillColor: colorScheme.surfaceContainerHighest
+                                  .withAlpha(76),
                             ),
                           ),
                         ],
@@ -230,7 +267,10 @@ class _LoginPageState extends State<LoginPage> {
                   style: FilledButton.styleFrom(
                     backgroundColor: colorScheme.primary,
                     foregroundColor: colorScheme.onPrimary,
-                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 32,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32),
                     ),
@@ -244,7 +284,10 @@ class _LoginPageState extends State<LoginPage> {
                             color: colorScheme.onPrimary,
                           ),
                         )
-                      : Text(_isLogin ? 'Iniciar sesión' : 'Registrarse', style: const TextStyle(fontSize: 16)),
+                      : Text(
+                          _isLogin ? 'Iniciar sesión' : 'Registrarse',
+                          style: const TextStyle(fontSize: 16),
+                        ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -261,7 +304,9 @@ class _LoginPageState extends State<LoginPage> {
                     foregroundColor: colorScheme.primary,
                   ),
                   child: Text(
-                    _isLogin ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión',
+                    _isLogin
+                        ? '¿No tienes cuenta? Regístrate'
+                        : '¿Ya tienes cuenta? Inicia sesión',
                   ),
                 ),
               ),

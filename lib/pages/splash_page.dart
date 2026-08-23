@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:task_tamer/pages/login_page.dart';
-import 'package:task_tamer/main.dart'; // Para importar MyHomePage temporalmente
+import 'package:task_tamer/pages/main_layout.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
       // Si hay sesión, vamos al inicio
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const MyHomePage(title: 'Task Tamer'),
+          builder: (context) => const MainLayout(),
         ),
       );
     } else {
