@@ -12,6 +12,7 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
+DATABASE_SCHEMA.md
 
 # IntelliJ related
 *.iml

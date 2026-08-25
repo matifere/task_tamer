@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:task_tamer/pages/login_page.dart';
-import 'package:task_tamer/pages/main_layout.dart';
+import 'package:task_tamer/pages/group_selection_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -25,10 +25,10 @@ class _SplashPageState extends State<SplashPage> {
     final session = Supabase.instance.client.auth.currentSession;
     
     if (session != null) {
-      // Si hay sesión, vamos al inicio
+      // Siempre ir a la selección de grupo primero
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const MainLayout(),
+          builder: (context) => const GroupSelectionPage(),
         ),
       );
     } else {
