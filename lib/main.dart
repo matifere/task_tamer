@@ -10,8 +10,12 @@ import 'package:task_tamer/theme/cubit/theme_cubit.dart';
 import 'package:task_tamer/theme/cubit/theme_state.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:task_tamer/l10n/app_localizations.dart';
+import 'package:task_tamer/services/notification_service.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await NotificationService().init();
 
   try {
     await Supabase.initialize(

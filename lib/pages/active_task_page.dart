@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:task_tamer/l10n/app_localizations.dart';
 import 'tasks/cubit/active_task_cubit.dart';
 import 'tasks/cubit/active_task_state.dart';
+import '../services/notification_service.dart';
 
 class ActiveTaskPage extends StatefulWidget {
   final Map<String, dynamic> task;
@@ -28,46 +29,67 @@ class ActiveTaskPage extends StatefulWidget {
 
 class _ActiveTaskPageState extends State<ActiveTaskPage> {
   Timer? _timer;
-  int _secondsElapsed = 0;
+  int _accumulatedSeconds = 0;
+  DateTime? _startTime;
   bool _isRunning = false;
+  int get _secondsElapsed => _accumulatedSeconds + (_startTime != null ? DateTime.now().difference(_startTime!).inSeconds : 0);
 
   @override
   void initState() {
     super.initState();
-    // Iniciar automáticamente al abrir la pantalla
-    _isRunning = true;
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _secondsElapsed++;
-      });
-    });
+    _startTimer();
   }
 
   @override
   void dispose() {
     _timer?.cancel();
+    NotificationService().cancelNotification();
     super.dispose();
+  }
+
+  void _startTimer() {
+    setState(() {
+      _isRunning = true;
+      _startTime = DateTime.now();
+    });
+    
+    NotificationService().showTimerNotification(
+      widget.task['titulo'] ?? 'Tarea sin título',
+      _startTime!.subtract(Duration(seconds: _accumulatedSeconds)), // Ajustar el cronómetro a los segundos acumulados
+    );
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {});
+    });
+  }
+
+  void _pauseTimer() {
+    if (_startTime != null) {
+      _accumulatedSeconds += DateTime.now().difference(_startTime!).inSeconds;
+      _startTime = null;
+    }
+    _timer?.cancel();
+    setState(() => _isRunning = false);
+    
+    NotificationService().showPausedNotification(
+      widget.task['titulo'] ?? 'Tarea sin título',
+      _formattedTime,
+    );
   }
 
   void _toggleTimer() {
     if (_isRunning) {
-      _timer?.cancel();
-      setState(() => _isRunning = false);
+      _pauseTimer();
     } else {
-      setState(() => _isRunning = true);
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        setState(() {
-          _secondsElapsed++;
-        });
-      });
+      _startTimer();
     }
   }
 
   void _completeTask(BuildContext context) {
     if (_isRunning) {
-      _timer?.cancel();
-      setState(() => _isRunning = false);
+      _pauseTimer();
     }
+    NotificationService().cancelNotification();
     
     context.read<ActiveTaskCubit>().completeTask(
       taskId: widget.task['id'],
