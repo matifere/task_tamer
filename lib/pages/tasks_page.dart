@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:lottie/lottie.dart';
 import 'package:task_tamer/l10n/app_localizations.dart';
 import 'tasks/cubit/create_task_cubit.dart';
 import 'tasks/cubit/tasks_cubit.dart';
@@ -141,7 +142,39 @@ class _TasksView extends StatelessWidget {
                       cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
                         final task = tasks[index];
                         final isReusable = task['es_reutilizable'] as bool? ?? false;
-                        final multiplier = task['multiplicador_dificultad']?.toString() ?? '1.0';
+                        final multiplierString = task['multiplicador_dificultad']?.toString() ?? '1.0';
+                        final multiplier = double.tryParse(multiplierString) ?? 1.0;
+
+                        Color difficultyColor;
+                        String lottieAsset;
+                        if (multiplier < 2.0) {
+                          difficultyColor = Colors.cyan; // 1.x
+                          lottieAsset = 'assets/squinting_tongue.lottie';
+                        } else if (multiplier < 3.0) {
+                          difficultyColor = Colors.teal; // 2.x
+                          lottieAsset = 'assets/smile.lottie';
+                        } else if (multiplier < 4.0) {
+                          difficultyColor = Colors.amber; // 3.x
+                          lottieAsset = 'assets/grimacing.lottie';
+                        } else if (multiplier < 4.8) {
+                          difficultyColor = Colors.deepOrange; // 4.x
+                          lottieAsset = 'assets/melting.lottie';
+                        } else {
+                          difficultyColor = Colors.purple; // 5.0
+                          lottieAsset = 'assets/crying_loudly.lottie';
+                        }
+
+                        // percentThresholdX va de -100 a 100 (aprox) según el swipe
+                        final clampedX = percentThresholdX.clamp(-100, 100);
+                        
+                        Color? overlayColor;
+                        if (clampedX > 0) {
+                          overlayColor = Colors.green.withValues(alpha: (clampedX / 100.0) * 0.6);
+                        } else if (clampedX < 0) {
+                          overlayColor = Colors.red.withValues(alpha: (clampedX.abs() / 100.0) * 0.6);
+                        } else {
+                          overlayColor = Colors.transparent;
+                        }
 
                         return Container(
                           decoration: BoxDecoration(
@@ -163,7 +196,7 @@ class _TasksView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(32),
                             child: Stack(
                               children: [
-                                // Fondo decorativo (gradiente suave)
+                                // Fondo decorativo (gradiente suave por defecto)
                                 Positioned.fill(
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
@@ -171,23 +204,27 @@ class _TasksView extends StatelessWidget {
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                         colors: [
-                                          colorScheme.primaryContainer.withValues(alpha: 0.4),
+                                          difficultyColor.withValues(alpha: 0.25),
                                           colorScheme.surface,
                                         ],
                                       ),
                                     ),
                                   ),
                                 ),
+                                // Contenido principal de la tarjeta
                                 Padding(
                                   padding: const EdgeInsets.all(32.0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: [
                                       const Spacer(flex: 1),
-                                      Icon(
-                                        Icons.task_alt_rounded,
-                                        size: 80,
-                                        color: colorScheme.primary.withValues(alpha: 0.8),
+                                      SizedBox(
+                                        height: 120,
+                                        child: Lottie.asset(
+                                          lottieAsset,
+                                          fit: BoxFit.contain,
+                                          repeat: true,
+                                        ),
                                       ),
                                       const SizedBox(height: 32),
                                       Text(
@@ -214,9 +251,9 @@ class _TasksView extends StatelessWidget {
                                         children: [
                                           _Badge(
                                             icon: Icons.star_rounded,
-                                            label: '${l10n.difficulty} ${multiplier}x',
-                                            color: Colors.amber[700]!,
-                                            backgroundColor: Colors.amber[100]!,
+                                            label: '${l10n.difficulty} ${multiplierString}x',
+                                            color: difficultyColor,
+                                            backgroundColor: difficultyColor.withValues(alpha: 0.15),
                                           ),
                                           const SizedBox(width: 12),
                                           _Badge(
@@ -229,6 +266,14 @@ class _TasksView extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 16),
                                     ],
+                                  ),
+                                ),
+                                // Capa superpuesta para el feedback de color al hacer swipe
+                                Positioned.fill(
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: overlayColor,
+                                    ),
                                   ),
                                 ),
                               ],
