@@ -16,10 +16,7 @@ class TasksCubit extends Cubit<TasksState> {
     emit(TasksLoading());
     try {
       final response = await _supabaseClient
-          .from('tasks')
-          .select()
-          .eq('group_id', groupId)
-          .order('created_at', ascending: false);
+          .rpc('get_pending_tasks', params: {'p_group_id': groupId});
 
       final tasks = List<Map<String, dynamic>>.from(response);
       emit(TasksLoaded(tasks));

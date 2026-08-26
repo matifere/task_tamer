@@ -191,8 +191,19 @@ class _TasksView extends StatelessWidget {
                       cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
                         final task = tasks[index];
                         final isReusable = task['es_reutilizable'] as bool? ?? false;
+                        final frecuencia = task['frecuencia_reinicio']?.toString() ?? 'instantaneo';
                         final multiplierString = task['multiplicador_dificultad']?.toString() ?? '1.0';
                         final multiplier = double.tryParse(multiplierString) ?? 1.0;
+
+                        String frecuenciaLabel = l10n.freqInstant;
+                        IconData frecuenciaIcon = Icons.flash_on_rounded;
+                        if (frecuencia == 'diario') {
+                          frecuenciaLabel = l10n.freqDaily;
+                          frecuenciaIcon = Icons.calendar_today_rounded;
+                        } else if (frecuencia == 'semanal') {
+                          frecuenciaLabel = l10n.freqWeekly;
+                          frecuenciaIcon = Icons.date_range_rounded;
+                        }
 
                         Color difficultyColor;
                         String lottieAsset;
@@ -306,8 +317,8 @@ class _TasksView extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 12),
                                           _Badge(
-                                            icon: isReusable ? Icons.autorenew_rounded : Icons.looks_one_rounded,
-                                            label: isReusable ? l10n.reusable : l10n.oneTime,
+                                            icon: isReusable ? frecuenciaIcon : Icons.looks_one_rounded,
+                                            label: isReusable ? frecuenciaLabel : l10n.oneTime,
                                             color: colorScheme.secondary,
                                             backgroundColor: colorScheme.secondaryContainer,
                                           ),
