@@ -72,5 +72,22 @@
   "emptyTasksDesc": "Crea la primera tarea para que tu grupo empiece a ganar puntos.",
   "difficulty": "Dificultad",
   "reusable": "Reutilizable",
-  "oneTime": "Única vez"
+  "oneTime": "Única vez",
+  "activeTaskTitle": "Tarea en Progreso",
+  "completeTaskAction": "Completar Tarea",
+  "cancelTaskAction": "Abandonar",
+  "timeElapsed": "Tiempo Transcurrido",
+  "pause": "Pausar",
+  "resume": "Reanudar",
+  "start": "Iniciar temporizador",
+  "earnedCoinsTitle": "¡Tarea Completada!",
+  "earnedCoinsDesc": "Has ganado {coins} monedas por tu esfuerzo.",
+  "@earnedCoinsDesc": {
+    "placeholders": {
+      "coins": {
+        "type": "int"
+      }
+    }
+  },
+  "awesome": "¡Genial!"
 }

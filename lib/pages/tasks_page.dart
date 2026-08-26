@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:lottie/lottie.dart';
 import 'package:task_tamer/l10n/app_localizations.dart';
+import 'active_task_page.dart';
+import 'tasks/cubit/active_task_cubit.dart';
 import 'tasks/cubit/create_task_cubit.dart';
 import 'tasks/cubit/tasks_cubit.dart';
 import 'tasks/cubit/tasks_state.dart';
@@ -139,6 +141,53 @@ class _TasksView extends StatelessWidget {
                       isLoop: true,
                       allowedSwipeDirection: const AllowedSwipeDirection.symmetric(horizontal: true),
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      onSwipe: (previousIndex, currentIndex, direction) {
+                        if (direction == CardSwiperDirection.right) {
+                          final task = tasks[previousIndex];
+                          final multiplierString = task['multiplicador_dificultad']?.toString() ?? '1.0';
+                          final multiplier = double.tryParse(multiplierString) ?? 1.0;
+
+                          Color difficultyColor;
+                          String lottieAsset;
+                          if (multiplier < 2.0) {
+                            difficultyColor = Colors.cyan;
+                            lottieAsset = 'assets/squinting_tongue.lottie';
+                          } else if (multiplier < 3.0) {
+                            difficultyColor = Colors.teal;
+                            lottieAsset = 'assets/smile.lottie';
+                          } else if (multiplier < 4.0) {
+                            difficultyColor = Colors.amber;
+                            lottieAsset = 'assets/grimacing.lottie';
+                          } else if (multiplier < 4.8) {
+                            difficultyColor = Colors.deepOrange;
+                            lottieAsset = 'assets/melting.lottie';
+                          } else {
+                            difficultyColor = Colors.purple;
+                            lottieAsset = 'assets/crying_loudly.lottie';
+                          }
+
+                          final tasksCubit = context.read<TasksCubit>();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider(
+                                create: (_) => ActiveTaskCubit(),
+                                child: ActiveTaskPage(
+                                  task: task,
+                                  groupId: tasksCubit.groupId,
+                                  lottieAsset: lottieAsset,
+                                  difficultyColor: difficultyColor,
+                                  multiplier: multiplier,
+                                ),
+                              ),
+                            ),
+                          ).then((result) {
+                            if (result == true) {
+                              tasksCubit.loadTasks(); // recargar
+                            }
+                          });
+                        }
+                        return true;
+                      },
                       cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
                         final task = tasks[index];
                         final isReusable = task['es_reutilizable'] as bool? ?? false;

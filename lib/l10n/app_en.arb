@@ -72,5 +72,22 @@
   "emptyTasksDesc": "Create the first task so your group can start earning points.",
   "difficulty": "Difficulty",
   "reusable": "Reusable",
-  "oneTime": "One-time"
+  "oneTime": "One-time",
+  "activeTaskTitle": "Task in Progress",
+  "completeTaskAction": "Complete Task",
+  "cancelTaskAction": "Abandon",
+  "timeElapsed": "Time Elapsed",
+  "pause": "Pause",
+  "resume": "Resume",
+  "start": "Start timer",
+  "earnedCoinsTitle": "Task Completed!",
+  "earnedCoinsDesc": "You earned {coins} coins for your effort.",
+  "@earnedCoinsDesc": {
+    "placeholders": {
+      "coins": {
+        "type": "int"
+      }
+    }
+  },
+  "awesome": "Awesome!"
 }

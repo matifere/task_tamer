@@ -451,6 +451,66 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Única vez'**
   String get oneTime;
+
+  /// No description provided for @activeTaskTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Tarea en Progreso'**
+  String get activeTaskTitle;
+
+  /// No description provided for @completeTaskAction.
+  ///
+  /// In es, this message translates to:
+  /// **'Completar Tarea'**
+  String get completeTaskAction;
+
+  /// No description provided for @cancelTaskAction.
+  ///
+  /// In es, this message translates to:
+  /// **'Abandonar'**
+  String get cancelTaskAction;
+
+  /// No description provided for @timeElapsed.
+  ///
+  /// In es, this message translates to:
+  /// **'Tiempo Transcurrido'**
+  String get timeElapsed;
+
+  /// No description provided for @pause.
+  ///
+  /// In es, this message translates to:
+  /// **'Pausar'**
+  String get pause;
+
+  /// No description provided for @resume.
+  ///
+  /// In es, this message translates to:
+  /// **'Reanudar'**
+  String get resume;
+
+  /// No description provided for @start.
+  ///
+  /// In es, this message translates to:
+  /// **'Iniciar temporizador'**
+  String get start;
+
+  /// No description provided for @earnedCoinsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Tarea Completada!'**
+  String get earnedCoinsTitle;
+
+  /// No description provided for @earnedCoinsDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Has ganado {coins} monedas por tu esfuerzo.'**
+  String earnedCoinsDesc(int coins);
+
+  /// No description provided for @awesome.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Genial!'**
+  String get awesome;
 }
 
 class _AppLocalizationsDelegate

@@ -194,4 +194,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get oneTime => 'One-time';
+
+  @override
+  String get activeTaskTitle => 'Task in Progress';
+
+  @override
+  String get completeTaskAction => 'Complete Task';
+
+  @override
+  String get cancelTaskAction => 'Abandon';
+
+  @override
+  String get timeElapsed => 'Time Elapsed';
+
+  @override
+  String get pause => 'Pause';
+
+  @override
+  String get resume => 'Resume';
+
+  @override
+  String get start => 'Start timer';
+
+  @override
+  String get earnedCoinsTitle => 'Task Completed!';
+
+  @override
+  String earnedCoinsDesc(int coins) {
+    return 'You earned $coins coins for your effort.';
+  }
+
+  @override
+  String get awesome => 'Awesome!';
 }
