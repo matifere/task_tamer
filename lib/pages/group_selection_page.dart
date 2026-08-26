@@ -313,9 +313,9 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
     );
   }
 
-  void _enterGroup(String groupId) {
+  void _enterGroup(String groupId, String groupCode) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => MainLayout(groupId: groupId)),
+      MaterialPageRoute(builder: (context) => MainLayout(groupId: groupId, groupCode: groupCode)),
     );
   }
 
@@ -473,7 +473,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
-            onTap: () => _enterGroup(groupData['id']),
+            onTap: () => _enterGroup(groupData['id'], groupData['codigo_invitacion'] ?? ''),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(

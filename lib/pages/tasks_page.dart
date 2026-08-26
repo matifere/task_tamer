@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:lottie/lottie.dart';
@@ -12,16 +13,18 @@ import 'tasks/widgets/create_task_modal.dart';
 
 class TasksPage extends StatelessWidget {
   final String groupId;
+  final String groupCode;
 
   const TasksPage({
     super.key,
     required this.groupId,
+    required this.groupCode,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TasksCubit(groupId: groupId)..loadTasks(),
+      create: (context) => TasksCubit(groupId: groupId, groupCode: groupCode)..loadTasks(),
       child: const _TasksView(),
     );
   }
@@ -29,6 +32,89 @@ class TasksPage extends StatelessWidget {
 
 class _TasksView extends StatelessWidget {
   const _TasksView();
+
+
+  Widget _buildTopHeader(BuildContext context, ThemeData theme, ColorScheme colorScheme) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: colorScheme.primaryContainer.withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: colorScheme.primary.withValues(alpha: 0.2)),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.group_add_rounded, color: colorScheme.primary),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Código del grupo",
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            color: colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          context.read<TasksCubit>().groupCode,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.copy_rounded, color: colorScheme.primary, size: 20),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: context.read<TasksCubit>().groupCode));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('¡Código del grupo copiado!'),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: colorScheme.primary,
+                        ),
+                      );
+                    },
+                    tooltip: "Copiar código",
+                    constraints: const BoxConstraints(),
+                    padding: EdgeInsets.zero,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Container(
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: colorScheme.shadow.withValues(alpha: 0.05),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                )
+              ]
+            ),
+            child: IconButton(
+              icon: Icon(Icons.refresh_rounded, color: colorScheme.primary),
+              onPressed: () => context.read<TasksCubit>().loadTasks(),
+              tooltip: "Recargar tareas",
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   void _showCreateTaskModal(BuildContext context) async {
     final tasksCubit = context.read<TasksCubit>();
@@ -89,50 +175,45 @@ class _TasksView extends StatelessWidget {
             final tasks = state.tasks;
 
             if (tasks.isEmpty) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.assignment_outlined, size: 80, color: colorScheme.primary.withValues(alpha: 0.5)),
-                      const SizedBox(height: 24),
-                      Text(
-                        l10n.emptyTasksTitle,
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
+              return Column(
+                children: [
+                  _buildTopHeader(context, theme, colorScheme),
+                  Expanded(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(32.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.assignment_outlined, size: 80, color: colorScheme.primary.withValues(alpha: 0.5)),
+                            const SizedBox(height: 24),
+                            Text(
+                              l10n.emptyTasksTitle,
+                              style: theme.textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              l10n.emptyTasksDesc,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
                         ),
-                        textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 12),
-                      Text(
-                        l10n.emptyTasksDesc,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
+                    ),
                   ),
-                ),
+                ],
               );
             }
 
             return Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.refresh_rounded, color: colorScheme.primary),
-                        onPressed: () => context.read<TasksCubit>().loadTasks(),
-                        tooltip: "Recargar tareas",
-                      ),
-                    ],
-                  ),
-                ),
+                _buildTopHeader(context, theme, colorScheme),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 100.0), // Espacio para el nav bar

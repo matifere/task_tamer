@@ -10,14 +10,16 @@ import 'settings_page.dart';
 
 class MainLayout extends StatelessWidget {
   final String groupId;
+  final String groupCode;
 
   const MainLayout({
     super.key,
     required this.groupId,
+    required this.groupCode,
   });
 
   List<Widget> get _pages => [
-        TasksPage(groupId: groupId),
+        TasksPage(groupId: groupId, groupCode: groupCode),
         const RankingPage(),
         const RewardsPage(),
         const SettingsPage(),

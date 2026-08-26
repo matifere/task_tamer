@@ -5,9 +5,11 @@ import 'tasks_state.dart';
 class TasksCubit extends Cubit<TasksState> {
   final SupabaseClient _supabaseClient;
   final String groupId;
+  final String groupCode;
 
   TasksCubit({
     required this.groupId,
+    required this.groupCode,
     SupabaseClient? supabaseClient,
   })  : _supabaseClient = supabaseClient ?? Supabase.instance.client,
         super(TasksInitial());
