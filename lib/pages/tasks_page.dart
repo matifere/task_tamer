@@ -1,13 +1,298 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:task_tamer/l10n/app_localizations.dart';
+import 'tasks/cubit/create_task_cubit.dart';
+import 'tasks/cubit/tasks_cubit.dart';
+import 'tasks/cubit/tasks_state.dart';
+import 'tasks/widgets/create_task_modal.dart';
 
 class TasksPage extends StatelessWidget {
-  const TasksPage({super.key});
+  final String groupId;
+
+  const TasksPage({
+    super.key,
+    required this.groupId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Tareas'),
+    return BlocProvider(
+      create: (context) => TasksCubit(groupId: groupId)..loadTasks(),
+      child: const _TasksView(),
+    );
+  }
+}
+
+class _TasksView extends StatelessWidget {
+  const _TasksView();
+
+  void _showCreateTaskModal(BuildContext context) async {
+    final tasksCubit = context.read<TasksCubit>();
+    final result = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (_) {
+        return BlocProvider(
+          create: (_) => CreateTaskCubit(),
+          child: CreateTaskModal(groupId: tasksCubit.groupId),
+        );
+      },
+    );
+
+    if (result == true) {
+      tasksCubit.loadTasks();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Scaffold(
+      backgroundColor: Colors.transparent, // Dejamos que MainLayout maneje el fondo
+      body: BlocBuilder<TasksCubit, TasksState>(
+        builder: (context, state) {
+          if (state is TasksLoading || state is TasksInitial) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (state is TasksError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, size: 48, color: colorScheme.error),
+                  const SizedBox(height: 16),
+                  Text(
+                    "Error al cargar las tareas",
+                    style: theme.textTheme.titleMedium?.copyWith(color: colorScheme.error),
+                  ),
+                  TextButton(
+                    onPressed: () => context.read<TasksCubit>().loadTasks(),
+                    child: const Text("Reintentar"),
+                  )
+                ],
+              ),
+            );
+          }
+
+          if (state is TasksLoaded) {
+            final tasks = state.tasks;
+
+            if (tasks.isEmpty) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.assignment_outlined, size: 80, color: colorScheme.primary.withValues(alpha: 0.5)),
+                      const SizedBox(height: 24),
+                      Text(
+                        l10n.emptyTasksTitle,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        l10n.emptyTasksDesc,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.refresh_rounded, color: colorScheme.primary),
+                        onPressed: () => context.read<TasksCubit>().loadTasks(),
+                        tooltip: "Recargar tareas",
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 100.0), // Espacio para el nav bar
+                    child: CardSwiper(
+                      cardsCount: tasks.length,
+                      isLoop: true,
+                      allowedSwipeDirection: const AllowedSwipeDirection.symmetric(horizontal: true),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
+                        final task = tasks[index];
+                        final isReusable = task['es_reutilizable'] as bool? ?? false;
+                        final multiplier = task['multiplicador_dificultad']?.toString() ?? '1.0';
+
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: colorScheme.surface,
+                            borderRadius: BorderRadius.circular(32),
+                            boxShadow: [
+                              BoxShadow(
+                                color: colorScheme.shadow.withValues(alpha: 0.1),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                              )
+                            ],
+                            border: Border.all(
+                              color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+                              width: 1,
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(32),
+                            child: Stack(
+                              children: [
+                                // Fondo decorativo (gradiente suave)
+                                Positioned.fill(
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          colorScheme.primaryContainer.withValues(alpha: 0.4),
+                                          colorScheme.surface,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(32.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      const Spacer(flex: 1),
+                                      Icon(
+                                        Icons.task_alt_rounded,
+                                        size: 80,
+                                        color: colorScheme.primary.withValues(alpha: 0.8),
+                                      ),
+                                      const SizedBox(height: 32),
+                                      Text(
+                                        task['titulo'] ?? '',
+                                        style: theme.textTheme.headlineMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: colorScheme.onSurface,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      if (task['descripcion'] != null && task['descripcion'].toString().isNotEmpty)
+                                        Text(
+                                          task['descripcion'],
+                                          style: theme.textTheme.bodyLarge?.copyWith(
+                                            color: colorScheme.onSurfaceVariant,
+                                            height: 1.5,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      const Spacer(flex: 2),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          _Badge(
+                                            icon: Icons.star_rounded,
+                                            label: '${l10n.difficulty} ${multiplier}x',
+                                            color: Colors.amber[700]!,
+                                            backgroundColor: Colors.amber[100]!,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          _Badge(
+                                            icon: isReusable ? Icons.autorenew_rounded : Icons.looks_one_rounded,
+                                            label: isReusable ? l10n.reusable : l10n.oneTime,
+                                            color: colorScheme.secondary,
+                                            backgroundColor: colorScheme.secondaryContainer,
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 16),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+
+          return const SizedBox.shrink();
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showCreateTaskModal(context),
+        icon: const Icon(Icons.add),
+        label: Text(l10n.createTaskTitle),
+        backgroundColor: theme.colorScheme.primary,
+        foregroundColor: theme.colorScheme.onPrimary,
+      ),
+    );
+  }
+}
+
+class _Badge extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final Color backgroundColor;
+
+  const _Badge({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.backgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 16, color: color),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

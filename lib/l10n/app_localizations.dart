@@ -355,6 +355,102 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Ya perteneces a este grupo o hubo un error.'**
   String get alreadyInGroupOrError;
+
+  /// No description provided for @createTaskTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Crear Tarea'**
+  String get createTaskTitle;
+
+  /// No description provided for @taskTitleLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Título de la tarea'**
+  String get taskTitleLabel;
+
+  /// No description provided for @taskDescLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Descripción'**
+  String get taskDescLabel;
+
+  /// No description provided for @isReusableLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Es reutilizable?'**
+  String get isReusableLabel;
+
+  /// No description provided for @resetFrequencyLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Frecuencia de reinicio'**
+  String get resetFrequencyLabel;
+
+  /// No description provided for @difficultyMultiplierLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Multiplicador de recompensa (Dificultad)'**
+  String get difficultyMultiplierLabel;
+
+  /// No description provided for @createTaskAction.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar Tarea'**
+  String get createTaskAction;
+
+  /// No description provided for @taskCreatedSuccessfully.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Tarea creada exitosamente!'**
+  String get taskCreatedSuccessfully;
+
+  /// No description provided for @freqInstant.
+  ///
+  /// In es, this message translates to:
+  /// **'Instantáneo (Siempre)'**
+  String get freqInstant;
+
+  /// No description provided for @freqDaily.
+  ///
+  /// In es, this message translates to:
+  /// **'Diario'**
+  String get freqDaily;
+
+  /// No description provided for @freqWeekly.
+  ///
+  /// In es, this message translates to:
+  /// **'Semanal'**
+  String get freqWeekly;
+
+  /// No description provided for @emptyTasksTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Aún no hay tareas'**
+  String get emptyTasksTitle;
+
+  /// No description provided for @emptyTasksDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Crea la primera tarea para que tu grupo empiece a ganar puntos.'**
+  String get emptyTasksDesc;
+
+  /// No description provided for @difficulty.
+  ///
+  /// In es, this message translates to:
+  /// **'Dificultad'**
+  String get difficulty;
+
+  /// No description provided for @reusable.
+  ///
+  /// In es, this message translates to:
+  /// **'Reutilizable'**
+  String get reusable;
+
+  /// No description provided for @oneTime.
+  ///
+  /// In es, this message translates to:
+  /// **'Única vez'**
+  String get oneTime;
 }
 
 class _AppLocalizationsDelegate

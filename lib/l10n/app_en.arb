@@ -56,5 +56,21 @@
     }
   },
   "invalidInviteCode": "Invalid invitation code or group does not exist.",
-  "alreadyInGroupOrError": "You already belong to this group or an error occurred."
+  "alreadyInGroupOrError": "You already belong to this group or an error occurred.",
+  "createTaskTitle": "Create Task",
+  "taskTitleLabel": "Task title",
+  "taskDescLabel": "Description",
+  "isReusableLabel": "Is reusable?",
+  "resetFrequencyLabel": "Reset frequency",
+  "difficultyMultiplierLabel": "Reward multiplier (Difficulty)",
+  "createTaskAction": "Save Task",
+  "taskCreatedSuccessfully": "Task created successfully!",
+  "freqInstant": "Instant (Always)",
+  "freqDaily": "Daily",
+  "freqWeekly": "Weekly",
+  "emptyTasksTitle": "No tasks yet",
+  "emptyTasksDesc": "Create the first task so your group can start earning points.",
+  "difficulty": "Difficulty",
+  "reusable": "Reusable",
+  "oneTime": "One-time"
 }

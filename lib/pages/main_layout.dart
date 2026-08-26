@@ -9,14 +9,19 @@ import 'rewards_page.dart';
 import 'settings_page.dart';
 
 class MainLayout extends StatelessWidget {
-  const MainLayout({super.key});
+  final String groupId;
 
-  final List<Widget> _pages = const [
-    TasksPage(),
-    RankingPage(),
-    RewardsPage(),
-    SettingsPage(),
-  ];
+  const MainLayout({
+    super.key,
+    required this.groupId,
+  });
+
+  List<Widget> get _pages => [
+        TasksPage(groupId: groupId),
+        const RankingPage(),
+        const RewardsPage(),
+        const SettingsPage(),
+      ];
 
   @override
   Widget build(BuildContext context) {

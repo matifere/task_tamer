@@ -144,4 +144,54 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get alreadyInGroupOrError =>
       'Ya perteneces a este grupo o hubo un error.';
+
+  @override
+  String get createTaskTitle => 'Crear Tarea';
+
+  @override
+  String get taskTitleLabel => 'Título de la tarea';
+
+  @override
+  String get taskDescLabel => 'Descripción';
+
+  @override
+  String get isReusableLabel => '¿Es reutilizable?';
+
+  @override
+  String get resetFrequencyLabel => 'Frecuencia de reinicio';
+
+  @override
+  String get difficultyMultiplierLabel =>
+      'Multiplicador de recompensa (Dificultad)';
+
+  @override
+  String get createTaskAction => 'Guardar Tarea';
+
+  @override
+  String get taskCreatedSuccessfully => '¡Tarea creada exitosamente!';
+
+  @override
+  String get freqInstant => 'Instantáneo (Siempre)';
+
+  @override
+  String get freqDaily => 'Diario';
+
+  @override
+  String get freqWeekly => 'Semanal';
+
+  @override
+  String get emptyTasksTitle => 'Aún no hay tareas';
+
+  @override
+  String get emptyTasksDesc =>
+      'Crea la primera tarea para que tu grupo empiece a ganar puntos.';
+
+  @override
+  String get difficulty => 'Dificultad';
+
+  @override
+  String get reusable => 'Reutilizable';
+
+  @override
+  String get oneTime => 'Única vez';
 }

@@ -315,7 +315,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
 
   void _enterGroup(String groupId) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const MainLayout()),
+      MaterialPageRoute(builder: (context) => MainLayout(groupId: groupId)),
     );
   }
 

@@ -56,5 +56,21 @@
     }
   },
   "invalidInviteCode": "Código de invitación no válido o no existe.",
-  "alreadyInGroupOrError": "Ya perteneces a este grupo o hubo un error."
+  "alreadyInGroupOrError": "Ya perteneces a este grupo o hubo un error.",
+  "createTaskTitle": "Crear Tarea",
+  "taskTitleLabel": "Título de la tarea",
+  "taskDescLabel": "Descripción",
+  "isReusableLabel": "¿Es reutilizable?",
+  "resetFrequencyLabel": "Frecuencia de reinicio",
+  "difficultyMultiplierLabel": "Multiplicador de recompensa (Dificultad)",
+  "createTaskAction": "Guardar Tarea",
+  "taskCreatedSuccessfully": "¡Tarea creada exitosamente!",
+  "freqInstant": "Instantáneo (Siempre)",
+  "freqDaily": "Diario",
+  "freqWeekly": "Semanal",
+  "emptyTasksTitle": "Aún no hay tareas",
+  "emptyTasksDesc": "Crea la primera tarea para que tu grupo empiece a ganar puntos.",
+  "difficulty": "Dificultad",
+  "reusable": "Reutilizable",
+  "oneTime": "Única vez"
 }
