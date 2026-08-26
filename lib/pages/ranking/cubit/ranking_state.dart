@@ -6,7 +6,12 @@ class RankingLoading extends RankingState {}
 
 class RankingLoaded extends RankingState {
   final List<Map<String, dynamic>> ranking;
-  RankingLoaded(this.ranking);
+  final List<Map<String, dynamic>> weeklyProgress;
+  
+  RankingLoaded({
+    required this.ranking,
+    required this.weeklyProgress,
+  });
 }
 
 class RankingError extends RankingState {
