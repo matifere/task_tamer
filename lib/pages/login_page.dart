@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _nameController = TextEditingController();
   bool _isLoading = false;
   bool _isLogin = true;
 
@@ -51,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         await Supabase.instance.client.auth.signUp(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
+          data: {'nombre': _nameController.text.trim().isNotEmpty ? _nameController.text.trim() : 'Usuario Nuevo'},
         );
         if (mounted && _isLogin == false) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -93,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -152,6 +155,39 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 48),
+              if (!_isLogin) ...[
+                TextField(
+                  controller: _nameController,
+                  keyboardType: TextInputType.name,
+                  style: TextStyle(color: colorScheme.onSurface),
+                  decoration: InputDecoration(
+                    labelText: "Tu nombre o apodo",
+                    labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                    prefixIcon: Icon(
+                      Icons.person_outline,
+                      color: colorScheme.primary,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 20,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      borderSide: BorderSide(color: colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      borderSide: BorderSide(
+                        color: colorScheme.primary,
+                        width: 2,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
               TextField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,

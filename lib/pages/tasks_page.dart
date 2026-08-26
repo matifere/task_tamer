@@ -23,10 +23,7 @@ class TasksPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TasksCubit(groupId: groupId, groupCode: groupCode)..loadTasks(),
-      child: const _TasksView(),
-    );
+    return const _TasksView();
   }
 }
 

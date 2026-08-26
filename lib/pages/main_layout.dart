@@ -4,7 +4,9 @@ import 'package:task_tamer/theme/theme.dart';
 import 'package:task_tamer/l10n/app_localizations.dart';
 import 'cubit/navigation_cubit.dart';
 import 'tasks_page.dart';
+import 'tasks/cubit/tasks_cubit.dart';
 import 'ranking_page.dart';
+import 'ranking/cubit/ranking_cubit.dart';
 import 'rewards_page.dart';
 import 'settings_page.dart';
 
@@ -20,15 +22,19 @@ class MainLayout extends StatelessWidget {
 
   List<Widget> get _pages => [
         TasksPage(groupId: groupId, groupCode: groupCode),
-        const RankingPage(),
+        RankingPage(groupId: groupId),
         const RewardsPage(),
         const SettingsPage(),
       ];
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => NavigationCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => NavigationCubit()),
+        BlocProvider(create: (_) => TasksCubit(groupId: groupId, groupCode: groupCode)..loadTasks()),
+        BlocProvider(create: (_) => RankingCubit(groupId: groupId)..loadRanking()),
+      ],
       child: BlocBuilder<NavigationCubit, int>(
         builder: (context, currentIndex) {
           final l10n = AppLocalizations.of(context)!;
