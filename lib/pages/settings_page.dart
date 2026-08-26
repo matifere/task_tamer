@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:task_tamer/pages/group_selection_page.dart';
 import 'package:task_tamer/pages/login_page.dart';
+import 'package:task_tamer/l10n/app_localizations.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -9,7 +10,6 @@ class SettingsPage extends StatelessWidget {
   Future<void> _logout(BuildContext context) async {
     await Supabase.instance.client.auth.signOut();
     if (context.mounted) {
-      // Al cerrar sesión, volvemos a la pantalla de Login usando el Navigator principal
       Navigator.of(context, rootNavigator: true).pushReplacement(
         MaterialPageRoute(builder: (context) => const LoginPage()),
       );
@@ -20,27 +20,15 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          'Ajustes',
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: colorScheme.onSurface,
-          ),
-        ),
-        centerTitle: true,
-      ),
       body: ListView(
         padding: const EdgeInsets.all(24.0),
         children: [
-          // Sección de cuenta
           Text(
-            'Cuenta y Grupos',
+            l10n.accountAndGroups,
             style: theme.textTheme.titleSmall?.copyWith(
               color: colorScheme.primary,
               fontWeight: FontWeight.bold,
@@ -48,7 +36,6 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           
-          // Tarjeta de Mis Grupos
           Card(
             elevation: 2,
             shadowColor: colorScheme.shadow.withValues(alpha: 0.1),
@@ -62,20 +49,19 @@ class SettingsPage extends StatelessWidget {
                 child: Icon(Icons.groups_rounded, color: colorScheme.onPrimaryContainer),
               ),
               title: Text(
-                'Mis Grupos',
+                l10n.myGroups,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               subtitle: Text(
-                'Cambiar de grupo activo, crear o unirse',
+                l10n.changeCreateJoinGroup,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
               trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: colorScheme.onSurfaceVariant),
               onTap: () {
-                // Navegamos hacia la selección de grupos
                 Navigator.of(context, rootNavigator: true).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => const GroupSelectionPage(),
@@ -87,9 +73,8 @@ class SettingsPage extends StatelessWidget {
           
           const SizedBox(height: 32),
           
-          // Sección de Seguridad
           Text(
-            'Seguridad',
+            l10n.security,
             style: theme.textTheme.titleSmall?.copyWith(
               color: colorScheme.error,
               fontWeight: FontWeight.bold,
@@ -97,7 +82,6 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           
-          // Tarjeta de Cerrar Sesión
           Card(
             elevation: 2,
             shadowColor: colorScheme.shadow.withValues(alpha: 0.1),
@@ -111,7 +95,7 @@ class SettingsPage extends StatelessWidget {
                 child: Icon(Icons.logout_rounded, color: colorScheme.onErrorContainer),
               ),
               title: Text(
-                'Cerrar sesión',
+                l10n.logout,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: colorScheme.error,

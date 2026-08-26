@@ -8,7 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_tamer/theme/app_theme.dart';
 import 'package:task_tamer/theme/cubit/theme_cubit.dart';
 import 'package:task_tamer/theme/cubit/theme_state.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:task_tamer/l10n/app_localizations.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -38,7 +39,17 @@ class MyApp extends StatelessWidget {
       builder: (context, state) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Task Tamer',
+          title: 'TaskTamer',
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('es', ''), // Español
+            Locale('en', ''), // Inglés
+          ],
           themeMode: state.themeMode,
           theme: AppTheme.lightTheme,
           // darkTheme: AppTheme.darkTheme, // Si se implementa

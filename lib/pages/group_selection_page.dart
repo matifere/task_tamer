@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:task_tamer/pages/main_layout.dart';
+import 'package:task_tamer/l10n/app_localizations.dart';
 
 class GroupSelectionPage extends StatefulWidget {
   const GroupSelectionPage({super.key});
@@ -39,7 +40,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
             )
           ''')
           .eq('user_id', userId);
-
+          
       if (mounted) {
         setState(() {
           _myGroups = List<Map<String, dynamic>>.from(response);
@@ -56,14 +57,19 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
   Future<void> _createGroup(String nombre, String descripcion) async {
     if (nombre.trim().isEmpty) return;
 
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isLoading = true);
+    
     try {
       final userId = Supabase.instance.client.auth.currentUser?.id;
       if (userId == null) throw Exception("Usuario no autenticado");
 
       final groupResponse = await Supabase.instance.client
           .from('groups')
-          .insert({'nombre': nombre.trim(), 'descripcion': descripcion.trim()})
+          .insert({
+            'nombre': nombre.trim(),
+            'descripcion': descripcion.trim(),
+          })
           .select()
           .single();
 
@@ -77,7 +83,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('¡Grupo "\$nombre" creado exitosamente!'),
+            content: Text(l10n.groupCreatedSuccessfully(nombre)),
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
         );
@@ -87,7 +93,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Error al crear el grupo. Inténtalo de nuevo.'),
+            content: Text(l10n.errorCreatingGroup),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -99,8 +105,10 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
 
   Future<void> _joinGroup(String codigo) async {
     if (codigo.trim().isEmpty) return;
-
+    
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isLoading = true);
+    
     try {
       final userId = Supabase.instance.client.auth.currentUser?.id;
       if (userId == null) throw Exception("Usuario no autenticado");
@@ -115,9 +123,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text(
-                'Código de invitación no válido o no existe.',
-              ),
+              content: Text(l10n.invalidInviteCode),
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
@@ -136,7 +142,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('¡Te has unido a "\$groupName"!'),
+            content: Text(l10n.joinedGroupSuccessfully(groupName.toString())),
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
         );
@@ -146,7 +152,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Ya perteneces a este grupo o hubo un error.'),
+            content: Text(l10n.alreadyInGroupOrError),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -159,6 +165,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
   void _showCreateGroupModal() {
     final nameController = TextEditingController();
     final descController = TextEditingController();
+    final l10n = AppLocalizations.of(context)!;
 
     showModalBottomSheet(
       context: context,
@@ -179,23 +186,20 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Crear un nuevo grupo',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                l10n.createGroupTitle,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: nameController,
-                decoration: _inputDecoration('Nombre del grupo', Icons.group),
+                decoration: _inputDecoration(l10n.groupNameLabel, Icons.group),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: descController,
-                decoration: _inputDecoration(
-                  'Descripción (Opcional)',
-                  Icons.description,
-                ),
+                decoration: _inputDecoration(l10n.groupDescLabel, Icons.description),
               ),
               const SizedBox(height: 24),
               ElevatedButton(
@@ -204,9 +208,9 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                   Navigator.pop(context);
                   _createGroup(nameController.text, descController.text);
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text('Crear Grupo', style: TextStyle(fontSize: 16)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(l10n.createGroupAction, style: const TextStyle(fontSize: 16)),
                 ),
               ),
               const SizedBox(height: 24),
@@ -219,6 +223,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
 
   void _showJoinGroupModal() {
     final codeController = TextEditingController();
+    final l10n = AppLocalizations.of(context)!;
 
     showModalBottomSheet(
       context: context,
@@ -239,26 +244,23 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Unirse a un grupo',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                l10n.joinGroupTitle,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 8),
               Text(
-                'Ingresa el código de 8 caracteres que te compartieron.',
+                l10n.joinGroupDesc,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: codeController,
                 maxLength: 8,
-                decoration: _inputDecoration(
-                  'Código de Invitación',
-                  Icons.vpn_key,
-                ),
+                decoration: _inputDecoration(l10n.inviteCodeLabel, Icons.vpn_key),
               ),
               const SizedBox(height: 24),
               ElevatedButton(
@@ -267,9 +269,9 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                   Navigator.pop(context);
                   _joinGroup(codeController.text);
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text('Unirse', style: TextStyle(fontSize: 16)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(l10n.join, style: const TextStyle(fontSize: 16)),
                 ),
               ),
               const SizedBox(height: 24),
@@ -296,7 +298,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
         borderSide: BorderSide(color: colorScheme.primary, width: 2),
       ),
       filled: true,
-      fillColor: colorScheme.surfaceContainerHighest.withAlpha(76),
+      fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
     );
   }
 
@@ -304,13 +306,14 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
     return ElevatedButton.styleFrom(
       backgroundColor: Theme.of(context).colorScheme.primary,
       foregroundColor: Theme.of(context).colorScheme.onPrimary,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
       elevation: 0,
     );
   }
 
   void _enterGroup(String groupId) {
-    // Aquí más adelante podríamos guardar en un estado/proveedor global en qué grupo entró
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => const MainLayout()),
     );
@@ -320,6 +323,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -327,12 +331,19 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: Text(
-          'Tus Grupos',
-          style: theme.textTheme.titleLarge?.copyWith(
-            color: colorScheme.onSurface,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.task_alt_rounded, color: colorScheme.primary),
+            const SizedBox(width: 8),
+            Text(
+              l10n.appTitle,
+              style: theme.textTheme.titleLarge?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -349,14 +360,16 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
           if (_isInitialLoading)
             const Center(child: CircularProgressIndicator())
           else if (_myGroups.isEmpty)
-            _buildEmptyState(theme, colorScheme)
+            _buildEmptyState(theme, colorScheme, l10n)
           else
             _buildGroupList(theme, colorScheme),
-
+            
           if (_isLoading)
             Container(
-              color: colorScheme.surface.withAlpha(150),
-              child: const Center(child: CircularProgressIndicator()),
+              color: colorScheme.surface.withValues(alpha: 0.6),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
         ],
       ),
@@ -368,7 +381,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                   heroTag: 'join_btn',
                   onPressed: _showJoinGroupModal,
                   icon: const Icon(Icons.login_rounded),
-                  label: const Text('Unirse'),
+                  label: Text(l10n.join),
                   backgroundColor: colorScheme.secondaryContainer,
                   foregroundColor: colorScheme.onSecondaryContainer,
                 ),
@@ -377,7 +390,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                   heroTag: 'create_btn',
                   onPressed: _showCreateGroupModal,
                   icon: const Icon(Icons.add),
-                  label: const Text('Nuevo Grupo'),
+                  label: Text(l10n.newGroup),
                   backgroundColor: colorScheme.primary,
                   foregroundColor: colorScheme.onPrimary,
                 ),
@@ -387,7 +400,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
     );
   }
 
-  Widget _buildEmptyState(ThemeData theme, ColorScheme colorScheme) {
+  Widget _buildEmptyState(ThemeData theme, ColorScheme colorScheme, AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -397,11 +410,11 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
           Icon(
             Icons.groups_rounded,
             size: 100,
-            color: colorScheme.primary.withAlpha(150),
+            color: colorScheme.primary.withValues(alpha: 0.6),
           ),
           const SizedBox(height: 32),
           Text(
-            'Aún no tienes un grupo activo',
+            l10n.noActiveGroup,
             style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -409,7 +422,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Crea uno nuevo para invitar a tus amigos o únete a uno existente usando un código de invitación.',
+            l10n.createOrJoinGroupDesc,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: colorScheme.onSurfaceVariant,
             ),
@@ -418,12 +431,9 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
           const SizedBox(height: 48),
           OutlinedButton.icon(
             icon: const Icon(Icons.add_circle_outline),
-            label: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Text(
-                'Crear un nuevo grupo',
-                style: TextStyle(fontSize: 16),
-              ),
+            label: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(l10n.createNewGroupBtn, style: const TextStyle(fontSize: 16)),
             ),
             style: OutlinedButton.styleFrom(
               foregroundColor: colorScheme.primary,
@@ -437,12 +447,9 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
           const SizedBox(height: 16),
           ElevatedButton.icon(
             icon: const Icon(Icons.login_rounded),
-            label: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Text(
-                'Tengo un código de invitación',
-                style: TextStyle(fontSize: 16),
-              ),
+            label: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(l10n.iHaveInviteCodeBtn, style: const TextStyle(fontSize: 16)),
             ),
             style: _buttonStyle(),
             onPressed: _showJoinGroupModal,
@@ -459,13 +466,11 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
       itemBuilder: (context, index) {
         final item = _myGroups[index];
         final groupData = item['groups'];
-
+        
         return Card(
           elevation: 2,
           margin: const EdgeInsets.only(bottom: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () => _enterGroup(groupData['id']),
@@ -476,11 +481,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                   CircleAvatar(
                     radius: 28,
                     backgroundColor: colorScheme.primaryContainer,
-                    child: Icon(
-                      Icons.group,
-                      color: colorScheme.onPrimaryContainer,
-                      size: 28,
-                    ),
+                    child: Icon(Icons.group, color: colorScheme.onPrimaryContainer, size: 28),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -494,8 +495,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        if (groupData['descripcion'] != null &&
-                            groupData['descripcion'].toString().isNotEmpty)
+                        if (groupData['descripcion'] != null && groupData['descripcion'].toString().isNotEmpty)
                           Text(
                             groupData['descripcion'],
                             style: theme.textTheme.bodySmall?.copyWith(
@@ -507,11 +507,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            Icon(
-                              Icons.vpn_key,
-                              size: 14,
-                              color: colorScheme.primary,
-                            ),
+                            Icon(Icons.vpn_key, size: 14, color: colorScheme.primary),
                             const SizedBox(width: 4),
                             Text(
                               groupData['codigo_invitacion'] ?? '',
@@ -521,14 +517,10 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                               ),
                             ),
                             const Spacer(),
-                            Icon(
-                              Icons.monetization_on,
-                              size: 14,
-                              color: Colors.amber[700],
-                            ),
+                            Icon(Icons.monetization_on, size: 14, color: Colors.amber[700]),
                             const SizedBox(width: 4),
                             Text(
-                              item['monedas_del_grupo'].toString(),
+                              '${item['monedas_del_grupo'] ?? 0}',
                               style: theme.textTheme.labelMedium?.copyWith(
                                 color: Colors.amber[800],
                                 fontWeight: FontWeight.bold,
@@ -540,10 +532,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Icon(
-                    Icons.chevron_right,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant),
                 ],
               ),
             ),

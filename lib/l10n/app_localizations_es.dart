@@ -1,0 +1,147 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Spanish Castilian (`es`).
+class AppLocalizationsEs extends AppLocalizations {
+  AppLocalizationsEs([String locale = 'es']) : super(locale);
+
+  @override
+  String get appTitle => 'TaskTamer';
+
+  @override
+  String get welcomeBack => 'Bienvenido de nuevo';
+
+  @override
+  String get createAccount => 'Crea tu cuenta';
+
+  @override
+  String get loginToContinue => 'Inicia sesión para continuar';
+
+  @override
+  String get registerToOrganize => 'Regístrate para organizar tus tareas';
+
+  @override
+  String get emailLabel => 'Correo electrónico';
+
+  @override
+  String get passwordLabel => 'Contraseña';
+
+  @override
+  String get loginBtn => 'Iniciar sesión';
+
+  @override
+  String get registerBtn => 'Registrarse';
+
+  @override
+  String get dontHaveAccount => '¿No tienes una cuenta? Regístrate';
+
+  @override
+  String get alreadyHaveAccount => '¿Ya tienes una cuenta? Inicia sesión';
+
+  @override
+  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
+
+  @override
+  String get unexpectedError => 'Ocurrió un error inesperado';
+
+  @override
+  String get loginSuccess => 'Inicio de sesión exitoso';
+
+  @override
+  String get registerSuccess => 'Registro exitoso.';
+
+  @override
+  String get tasks => 'Tareas';
+
+  @override
+  String get ranking => 'Ranking';
+
+  @override
+  String get rewards => 'Premios';
+
+  @override
+  String get settings => 'Ajustes';
+
+  @override
+  String get yourGroups => 'Tus Grupos';
+
+  @override
+  String get noActiveGroup => 'Aún no tienes un grupo activo';
+
+  @override
+  String get createOrJoinGroupDesc =>
+      'Crea uno nuevo para invitar a tus amigos o únete a uno existente usando un código de invitación.';
+
+  @override
+  String get createNewGroupBtn => 'Crear un nuevo grupo';
+
+  @override
+  String get iHaveInviteCodeBtn => 'Tengo un código de invitación';
+
+  @override
+  String get join => 'Unirse';
+
+  @override
+  String get newGroup => 'Nuevo Grupo';
+
+  @override
+  String get createGroupTitle => 'Crear un nuevo grupo';
+
+  @override
+  String get groupNameLabel => 'Nombre del grupo';
+
+  @override
+  String get groupDescLabel => 'Descripción (Opcional)';
+
+  @override
+  String get createGroupAction => 'Crear Grupo';
+
+  @override
+  String get joinGroupTitle => 'Unirse a un grupo';
+
+  @override
+  String get joinGroupDesc =>
+      'Ingresa el código de 8 caracteres que te compartieron.';
+
+  @override
+  String get inviteCodeLabel => 'Código de Invitación';
+
+  @override
+  String get myGroups => 'Mis Grupos';
+
+  @override
+  String get changeCreateJoinGroup => 'Cambiar de grupo activo, crear o unirse';
+
+  @override
+  String get accountAndGroups => 'Cuenta y Grupos';
+
+  @override
+  String get security => 'Seguridad';
+
+  @override
+  String get logout => 'Cerrar sesión';
+
+  @override
+  String groupCreatedSuccessfully(String name) {
+    return '¡Grupo $name creado exitosamente!';
+  }
+
+  @override
+  String get errorCreatingGroup =>
+      'Error al crear el grupo. Inténtalo de nuevo.';
+
+  @override
+  String joinedGroupSuccessfully(String name) {
+    return '¡Te has unido a $name!';
+  }
+
+  @override
+  String get invalidInviteCode => 'Código de invitación no válido o no existe.';
+
+  @override
+  String get alreadyInGroupOrError =>
+      'Ya perteneces a este grupo o hubo un error.';
+}

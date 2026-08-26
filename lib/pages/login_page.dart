@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:task_tamer/pages/group_selection_page.dart';
+import 'package:task_tamer/l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,11 +18,12 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLogin = true;
 
   Future<void> _authenticate() async {
+    final l10n = AppLocalizations.of(context)!;
     if (!_isLogin &&
         _passwordController.text != _confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Las contraseñas no coinciden'),
+          content: Text(l10n.passwordsDoNotMatch),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -53,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
         if (mounted && _isLogin == false) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('Registro exitoso.'),
+              content: Text(l10n.registerSuccess),
               backgroundColor: Theme.of(context).colorScheme.primary,
             ),
           );
@@ -72,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Ocurrió un error inesperado'),
+            content: Text(l10n.unexpectedError),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -98,8 +100,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
-    // Usando colores modulares del theme
     return Scaffold(
       backgroundColor: colorScheme.surface,
       body: Center(
@@ -129,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                   key: ValueKey<bool>(_isLogin),
                   children: [
                     Text(
-                      _isLogin ? 'Bienvenido de nuevo' : 'Crea tu cuenta',
+                      _isLogin ? l10n.welcomeBack : l10n.createAccount,
                       style: theme.textTheme.headlineMedium?.copyWith(
                         color: colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
@@ -139,8 +141,8 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 8),
                     Text(
                       _isLogin
-                          ? 'Inicia sesión para continuar'
-                          : 'Regístrate para organizar tus tareas',
+                          ? l10n.loginToContinue
+                          : l10n.registerToOrganize,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
@@ -155,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                 keyboardType: TextInputType.emailAddress,
                 style: TextStyle(color: colorScheme.onSurface),
                 decoration: InputDecoration(
-                  labelText: 'Correo electrónico',
+                  labelText: l10n.emailLabel,
                   labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                   prefixIcon: Icon(
                     Icons.email_outlined,
@@ -177,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   filled: true,
-                  fillColor: colorScheme.surfaceContainerHighest.withAlpha(76),
+                  fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
                 ),
               ),
               const SizedBox(height: 16),
@@ -186,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 style: TextStyle(color: colorScheme.onSurface),
                 decoration: InputDecoration(
-                  labelText: 'Contraseña',
+                  labelText: l10n.passwordLabel,
                   labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                   prefixIcon: Icon(
                     Icons.lock_outline,
@@ -208,106 +210,85 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   filled: true,
-                  fillColor: colorScheme.surfaceContainerHighest.withAlpha(76),
+                  fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
                 ),
               ),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeInOutCubic,
-                alignment: Alignment.topCenter,
-                child: _isLogin
-                    ? const SizedBox.shrink()
-                    : Column(
-                        children: [
-                          const SizedBox(height: 16),
-                          TextField(
-                            controller: _confirmPasswordController,
-                            obscureText: true,
-                            style: TextStyle(color: colorScheme.onSurface),
-                            decoration: InputDecoration(
-                              labelText: 'Confirmar contraseña',
-                              labelStyle: TextStyle(
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                              prefixIcon: Icon(
-                                Icons.lock_clock_outlined,
-                                color: colorScheme.primary,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 24,
-                                vertical: 20,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24),
-                                borderSide: BorderSide(
-                                  color: colorScheme.outline,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24),
-                                borderSide: BorderSide(
-                                  color: colorScheme.primary,
-                                  width: 2,
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainerHighest
-                                  .withAlpha(76),
-                            ),
-                          ),
-                        ],
+              if (!_isLogin) ...[
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _confirmPasswordController,
+                  obscureText: true,
+                  style: TextStyle(color: colorScheme.onSurface),
+                  decoration: InputDecoration(
+                    labelText: '${l10n.passwordLabel} (Confirmar)',
+                    labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                    prefixIcon: Icon(
+                      Icons.lock_reset_rounded,
+                      color: colorScheme.primary,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 20,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      borderSide: BorderSide(color: colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      borderSide: BorderSide(
+                        color: colorScheme.primary,
+                        width: 2,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: _isLoading ? null : _authenticate,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorScheme.primary,
+                  foregroundColor: colorScheme.onPrimary,
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  elevation: 0,
+                ),
+                child: _isLoading
+                    ? SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(
+                          color: colorScheme.onPrimary,
+                          strokeWidth: 3,
+                        ),
+                      )
+                    : Text(
+                        _isLogin ? l10n.loginBtn : l10n.registerBtn,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
               ),
-              const SizedBox(height: 32),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: FilledButton(
-                  key: ValueKey<bool>(_isLogin),
-                  onPressed: _isLoading ? null : _authenticate,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                    foregroundColor: colorScheme.onPrimary,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 32,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                  ),
-                  child: _isLoading
-                      ? SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: colorScheme.onPrimary,
-                          ),
-                        )
-                      : Text(
-                          _isLogin ? 'Iniciar sesión' : 'Registrarse',
-                          style: const TextStyle(fontSize: 16),
-                        ),
+              const SizedBox(height: 24),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isLogin = !_isLogin;
+                  });
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: colorScheme.primary,
                 ),
-              ),
-              const SizedBox(height: 16),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: TextButton(
-                  key: ValueKey<bool>(_isLogin),
-                  onPressed: () {
-                    setState(() {
-                      _isLogin = !_isLogin;
-                    });
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: colorScheme.primary,
-                  ),
-                  child: Text(
-                    _isLogin
-                        ? '¿No tienes cuenta? Regístrate'
-                        : '¿Ya tienes cuenta? Inicia sesión',
-                  ),
+                child: Text(
+                  _isLogin
+                      ? l10n.dontHaveAccount
+                      : l10n.alreadyHaveAccount,
                 ),
               ),
             ],

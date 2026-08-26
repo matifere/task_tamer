@@ -1,0 +1,60 @@
+{
+  "@@locale": "en",
+  "appTitle": "TaskTamer",
+  "welcomeBack": "Welcome back",
+  "createAccount": "Create your account",
+  "loginToContinue": "Log in to continue",
+  "registerToOrganize": "Sign up to organize your tasks",
+  "emailLabel": "Email address",
+  "passwordLabel": "Password",
+  "loginBtn": "Log in",
+  "registerBtn": "Sign up",
+  "dontHaveAccount": "Don't have an account? Sign up",
+  "alreadyHaveAccount": "Already have an account? Log in",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "unexpectedError": "An unexpected error occurred",
+  "loginSuccess": "Login successful",
+  "registerSuccess": "Registration successful.",
+  "tasks": "Tasks",
+  "ranking": "Leaderboard",
+  "rewards": "Rewards",
+  "settings": "Settings",
+  "yourGroups": "Your Groups",
+  "noActiveGroup": "You don't have an active group yet",
+  "createOrJoinGroupDesc": "Create a new one to invite your friends or join an existing one using an invitation code.",
+  "createNewGroupBtn": "Create a new group",
+  "iHaveInviteCodeBtn": "I have an invitation code",
+  "join": "Join",
+  "newGroup": "New Group",
+  "createGroupTitle": "Create a new group",
+  "groupNameLabel": "Group name",
+  "groupDescLabel": "Description (Optional)",
+  "createGroupAction": "Create Group",
+  "joinGroupTitle": "Join a group",
+  "joinGroupDesc": "Enter the 8-character code that was shared with you.",
+  "inviteCodeLabel": "Invitation Code",
+  "myGroups": "My Groups",
+  "changeCreateJoinGroup": "Switch active group, create or join",
+  "accountAndGroups": "Account & Groups",
+  "security": "Security",
+  "logout": "Log out",
+  "groupCreatedSuccessfully": "Group {name} created successfully!",
+  "@groupCreatedSuccessfully": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "errorCreatingGroup": "Error creating the group. Please try again.",
+  "joinedGroupSuccessfully": "You have joined {name}!",
+  "@joinedGroupSuccessfully": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "invalidInviteCode": "Invalid invitation code or group does not exist.",
+  "alreadyInGroupOrError": "You already belong to this group or an error occurred."
+}

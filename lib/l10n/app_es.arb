@@ -1,0 +1,60 @@
+{
+  "@@locale": "es",
+  "appTitle": "TaskTamer",
+  "welcomeBack": "Bienvenido de nuevo",
+  "createAccount": "Crea tu cuenta",
+  "loginToContinue": "Inicia sesión para continuar",
+  "registerToOrganize": "Regístrate para organizar tus tareas",
+  "emailLabel": "Correo electrónico",
+  "passwordLabel": "Contraseña",
+  "loginBtn": "Iniciar sesión",
+  "registerBtn": "Registrarse",
+  "dontHaveAccount": "¿No tienes una cuenta? Regístrate",
+  "alreadyHaveAccount": "¿Ya tienes una cuenta? Inicia sesión",
+  "passwordsDoNotMatch": "Las contraseñas no coinciden",
+  "unexpectedError": "Ocurrió un error inesperado",
+  "loginSuccess": "Inicio de sesión exitoso",
+  "registerSuccess": "Registro exitoso.",
+  "tasks": "Tareas",
+  "ranking": "Ranking",
+  "rewards": "Premios",
+  "settings": "Ajustes",
+  "yourGroups": "Tus Grupos",
+  "noActiveGroup": "Aún no tienes un grupo activo",
+  "createOrJoinGroupDesc": "Crea uno nuevo para invitar a tus amigos o únete a uno existente usando un código de invitación.",
+  "createNewGroupBtn": "Crear un nuevo grupo",
+  "iHaveInviteCodeBtn": "Tengo un código de invitación",
+  "join": "Unirse",
+  "newGroup": "Nuevo Grupo",
+  "createGroupTitle": "Crear un nuevo grupo",
+  "groupNameLabel": "Nombre del grupo",
+  "groupDescLabel": "Descripción (Opcional)",
+  "createGroupAction": "Crear Grupo",
+  "joinGroupTitle": "Unirse a un grupo",
+  "joinGroupDesc": "Ingresa el código de 8 caracteres que te compartieron.",
+  "inviteCodeLabel": "Código de Invitación",
+  "myGroups": "Mis Grupos",
+  "changeCreateJoinGroup": "Cambiar de grupo activo, crear o unirse",
+  "accountAndGroups": "Cuenta y Grupos",
+  "security": "Seguridad",
+  "logout": "Cerrar sesión",
+  "groupCreatedSuccessfully": "¡Grupo {name} creado exitosamente!",
+  "@groupCreatedSuccessfully": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "errorCreatingGroup": "Error al crear el grupo. Inténtalo de nuevo.",
+  "joinedGroupSuccessfully": "¡Te has unido a {name}!",
+  "@joinedGroupSuccessfully": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "invalidInviteCode": "Código de invitación no válido o no existe.",
+  "alreadyInGroupOrError": "Ya perteneces a este grupo o hubo un error."
+}
