@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:vibration/vibration.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:lottie/lottie.dart';
@@ -145,6 +146,7 @@ class _TasksView extends StatelessWidget {
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancelar')),
           FilledButton(
             onPressed: () {
+              Vibration.vibrate(duration: 100);
               Navigator.pop(ctx);
               tasksCubit.deleteTask(taskId);
             },
@@ -242,6 +244,7 @@ class _TasksView extends StatelessWidget {
                       allowedSwipeDirection: const AllowedSwipeDirection.symmetric(horizontal: true),
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                       onSwipe: (previousIndex, currentIndex, direction) {
+                        Vibration.vibrate(duration: 50);
                         if (direction == CardSwiperDirection.right) {
                           final task = tasks[previousIndex];
                           final multiplierString = task['multiplicador_dificultad']?.toString() ?? '1.0';

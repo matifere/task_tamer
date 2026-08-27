@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:vibration/vibration.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_tamer/l10n/app_localizations.dart';
 import 'rewards/cubit/rewards_cubit.dart';
@@ -418,6 +420,7 @@ class _RewardsView extends StatelessWidget {
                           : isOwned
                           ? OutlinedButton(
                               onPressed: () {
+                                Vibration.vibrate(duration: 50);
                                 context.read<RewardsCubit>().equipCosmetic(
                                   item['id'],
                                 );
@@ -430,6 +433,7 @@ class _RewardsView extends StatelessWidget {
                             )
                           : FilledButton.icon(
                               onPressed: () {
+                                Vibration.vibrate(duration: 100);
                                 context.read<RewardsCubit>().buyCosmetic(
                                   item['id'],
                                   item['cost'],

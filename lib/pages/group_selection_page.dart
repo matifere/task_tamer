@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:task_tamer/pages/main_layout.dart';
 import 'package:task_tamer/l10n/app_localizations.dart';
@@ -379,7 +380,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
               children: [
                 FloatingActionButton.extended(
                   heroTag: 'join_btn',
-                  onPressed: _showJoinGroupModal,
+                  onPressed: () { Vibration.vibrate(duration: 50); _showJoinGroupModal(); },
                   icon: const Icon(Icons.login_rounded),
                   label: Text(l10n.join),
                   backgroundColor: colorScheme.secondaryContainer,
@@ -388,7 +389,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                 const SizedBox(height: 12),
                 FloatingActionButton.extended(
                   heroTag: 'create_btn',
-                  onPressed: _showCreateGroupModal,
+                  onPressed: () { Vibration.vibrate(duration: 50); _showCreateGroupModal(); },
                   icon: const Icon(Icons.add),
                   label: Text(l10n.newGroup),
                   backgroundColor: colorScheme.primary,
@@ -442,7 +443,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
                 borderRadius: BorderRadius.circular(24),
               ),
             ),
-            onPressed: _showCreateGroupModal,
+            onPressed: () { Vibration.vibrate(duration: 50); _showCreateGroupModal(); },
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
@@ -452,7 +453,7 @@ class _GroupSelectionPageState extends State<GroupSelectionPage> {
               child: Text(l10n.iHaveInviteCodeBtn, style: const TextStyle(fontSize: 16)),
             ),
             style: _buttonStyle(),
-            onPressed: _showJoinGroupModal,
+            onPressed: () { Vibration.vibrate(duration: 50); _showJoinGroupModal(); },
           ),
         ],
       ),

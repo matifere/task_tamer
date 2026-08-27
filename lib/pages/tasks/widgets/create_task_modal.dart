@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_tamer/l10n/app_localizations.dart';
 import '../cubit/create_task_cubit.dart';
@@ -40,6 +41,7 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
   }
 
   void _submit(BuildContext context) {
+    Vibration.vibrate(duration: 60);
     if (widget.taskToEdit != null) {
       context.read<CreateTaskCubit>().updateTask(
             taskId: widget.taskToEdit!['id'],

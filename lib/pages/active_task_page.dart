@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:vibration/vibration.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:task_tamer/l10n/app_localizations.dart';
@@ -78,6 +80,7 @@ class _ActiveTaskPageState extends State<ActiveTaskPage> {
   }
 
   void _toggleTimer() {
+    Vibration.vibrate(duration: 100);
     if (_isRunning) {
       _pauseTimer();
     } else {
@@ -90,6 +93,8 @@ class _ActiveTaskPageState extends State<ActiveTaskPage> {
       _pauseTimer();
     }
     NotificationService().cancelNotification();
+    
+    Vibration.vibrate(duration: 200);
     
     context.read<ActiveTaskCubit>().completeTask(
       taskId: widget.task['id'],
