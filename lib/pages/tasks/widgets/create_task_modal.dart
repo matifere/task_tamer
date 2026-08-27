@@ -6,19 +6,31 @@ import '../cubit/create_task_state.dart';
 
 class CreateTaskModal extends StatefulWidget {
   final String groupId;
+  final Map<String, dynamic>? taskToEdit;
 
-  const CreateTaskModal({super.key, required this.groupId});
+  const CreateTaskModal({super.key, required this.groupId, this.taskToEdit});
 
   @override
   State<CreateTaskModal> createState() => _CreateTaskModalState();
 }
 
 class _CreateTaskModalState extends State<CreateTaskModal> {
-  final _titleController = TextEditingController();
-  final _descController = TextEditingController();
-  bool _esReutilizable = true;
-  String _frecuencia = 'instantaneo';
-  double _multiplicador = 1.0;
+  late TextEditingController _titleController;
+  late TextEditingController _descController;
+  late bool _esReutilizable;
+  late String _frecuencia;
+  late double _multiplicador;
+
+  @override
+  void initState() {
+    super.initState();
+    final task = widget.taskToEdit;
+    _titleController = TextEditingController(text: task?['titulo'] ?? '');
+    _descController = TextEditingController(text: task?['descripcion'] ?? '');
+    _esReutilizable = task?['es_reutilizable'] ?? true;
+    _frecuencia = task?['frecuencia_reinicio'] ?? 'instantaneo';
+    _multiplicador = (task?['multiplicador_dificultad'] as num?)?.toDouble() ?? 1.0;
+  }
 
   @override
   void dispose() {
@@ -28,14 +40,25 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
   }
 
   void _submit(BuildContext context) {
-    context.read<CreateTaskCubit>().createTask(
-          groupId: widget.groupId,
-          titulo: _titleController.text,
-          descripcion: _descController.text,
-          esReutilizable: _esReutilizable,
-          frecuenciaReinicio: _frecuencia,
-          multiplicadorDificultad: _multiplicador,
-        );
+    if (widget.taskToEdit != null) {
+      context.read<CreateTaskCubit>().updateTask(
+            taskId: widget.taskToEdit!['id'],
+            titulo: _titleController.text,
+            descripcion: _descController.text,
+            esReutilizable: _esReutilizable,
+            frecuenciaReinicio: _frecuencia,
+            multiplicadorDificultad: _multiplicador,
+          );
+    } else {
+      context.read<CreateTaskCubit>().createTask(
+            groupId: widget.groupId,
+            titulo: _titleController.text,
+            descripcion: _descController.text,
+            esReutilizable: _esReutilizable,
+            frecuenciaReinicio: _frecuencia,
+            multiplicadorDificultad: _multiplicador,
+          );
+    }
   }
 
   @override
@@ -49,7 +72,7 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
         if (state is CreateTaskSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(l10n.taskCreatedSuccessfully),
+              content: Text(widget.taskToEdit != null ? "Tarea actualizada exitosamente" : l10n.taskCreatedSuccessfully),
               backgroundColor: colorScheme.primary,
             ),
           );
@@ -79,7 +102,7 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  l10n.createTaskTitle,
+                  widget.taskToEdit != null ? "Editar Tarea" : l10n.createTaskTitle,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -169,7 +192,7 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
                           width: 20,
                           child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                         )
-                      : Text(l10n.createTaskAction, style: const TextStyle(fontSize: 16)),
+                      : Text(widget.taskToEdit != null ? "Guardar" : l10n.createTaskAction, style: const TextStyle(fontSize: 16)),
                 ),
                 const SizedBox(height: 24),
               ],

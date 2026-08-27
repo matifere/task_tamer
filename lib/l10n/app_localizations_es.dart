@@ -171,7 +171,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskCreatedSuccessfully => '¡Tarea creada exitosamente!';
 
   @override
-  String get freqInstant => 'Instantáneo (Siempre)';
+  String get freqInstant => 'Instantáneo';
 
   @override
   String get freqDaily => 'Diario';

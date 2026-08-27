@@ -113,7 +113,7 @@ class _TasksView extends StatelessWidget {
     );
   }
 
-  void _showCreateTaskModal(BuildContext context) async {
+  void _showCreateTaskModal(BuildContext context, {Map<String, dynamic>? taskToEdit}) async {
     final tasksCubit = context.read<TasksCubit>();
     final result = await showModalBottomSheet<bool>(
       context: context,
@@ -124,7 +124,7 @@ class _TasksView extends StatelessWidget {
       builder: (_) {
         return BlocProvider(
           create: (_) => CreateTaskCubit(),
-          child: CreateTaskModal(groupId: tasksCubit.groupId),
+          child: CreateTaskModal(groupId: tasksCubit.groupId, taskToEdit: taskToEdit),
         );
       },
     );
@@ -132,6 +132,28 @@ class _TasksView extends StatelessWidget {
     if (result == true) {
       tasksCubit.loadTasks();
     }
+  }
+
+  void _confirmDeleteTask(BuildContext context, String taskId, String title) {
+    final tasksCubit = context.read<TasksCubit>();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Eliminar tarea'),
+        content: Text('¿Seguro que deseas eliminar "$title"?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancelar')),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              tasksCubit.deleteTask(taskId);
+            },
+            style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
+            child: const Text('Eliminar'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -355,6 +377,19 @@ class _TasksView extends StatelessWidget {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            icon: Icon(Icons.edit_rounded, color: colorScheme.onSurface.withValues(alpha: 0.5)),
+                                            onPressed: () => _showCreateTaskModal(context, taskToEdit: task),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.delete_rounded, color: colorScheme.error.withValues(alpha: 0.8)),
+                                            onPressed: () => _confirmDeleteTask(context, task['id'], task['titulo']),
+                                          ),
+                                        ],
+                                      ),
                                       const Spacer(flex: 1),
                                       SizedBox(
                                         height: 120,
@@ -408,9 +443,11 @@ class _TasksView extends StatelessWidget {
                                 ),
                                 // Capa superpuesta para el feedback de color al hacer swipe
                                 Positioned.fill(
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      color: overlayColor,
+                                  child: IgnorePointer(
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        color: overlayColor,
+                                      ),
                                     ),
                                   ),
                                 ),

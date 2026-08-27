@@ -65,7 +65,7 @@
   "difficultyMultiplierLabel": "Multiplicador de recompensa (Dificultad)",
   "createTaskAction": "Guardar Tarea",
   "taskCreatedSuccessfully": "¡Tarea creada exitosamente!",
-  "freqInstant": "Instantáneo (Siempre)",
+  "freqInstant": "Instantáneo",
   "freqDaily": "Diario",
   "freqWeekly": "Semanal",
   "emptyTasksTitle": "Aún no hay tareas",

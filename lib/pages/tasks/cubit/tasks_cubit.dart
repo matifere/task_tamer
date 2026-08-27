@@ -26,4 +26,13 @@ class TasksCubit extends Cubit<TasksState> {
       emit(TasksError(e.toString()));
     }
   }
+
+  Future<void> deleteTask(String taskId) async {
+    try {
+      await _supabaseClient.from('tasks').delete().eq('id', taskId);
+      loadTasks();
+    } catch (e) {
+      emit(TasksError(e.toString()));
+    }
+  }
 }

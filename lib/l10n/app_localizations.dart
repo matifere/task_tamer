@@ -407,7 +407,7 @@ abstract class AppLocalizations {
   /// No description provided for @freqInstant.
   ///
   /// In es, this message translates to:
-  /// **'Instantáneo (Siempre)'**
+  /// **'Instantáneo'**
   String get freqInstant;
 
   /// No description provided for @freqDaily.

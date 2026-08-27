@@ -39,4 +39,34 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
       emit(CreateTaskFailure(e.toString()));
     }
   }
+
+  Future<void> updateTask({
+    required String taskId,
+    required String titulo,
+    required String descripcion,
+    required bool esReutilizable,
+    required String frecuenciaReinicio,
+    required double multiplicadorDificultad,
+  }) async {
+    if (titulo.trim().isEmpty) {
+      emit(const CreateTaskFailure("El título no puede estar vacío"));
+      return;
+    }
+
+    emit(CreateTaskLoading());
+
+    try {
+      await _supabaseClient.from('tasks').update({
+        'titulo': titulo.trim(),
+        'descripcion': descripcion.trim(),
+        'es_reutilizable': esReutilizable,
+        'frecuencia_reinicio': frecuenciaReinicio,
+        'multiplicador_dificultad': multiplicadorDificultad,
+      }).eq('id', taskId);
+
+      emit(CreateTaskSuccess());
+    } catch (e) {
+      emit(CreateTaskFailure(e.toString()));
+    }
+  }
 }
