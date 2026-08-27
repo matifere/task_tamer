@@ -89,6 +89,97 @@ class CosmeticNameText extends StatelessWidget {
           ),
         );
 
+      case 'ocean':
+        return ShaderMask(
+          shaderCallback: (bounds) => LinearGradient(
+            colors: isDark 
+                ? [Colors.blue.shade300, Colors.teal.shade300, Colors.blue.shade300]
+                : [Colors.blue.shade700, Colors.teal.shade700, Colors.blue.shade800],
+            stops: const [0.0, 0.5, 1.0],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ).createShader(bounds),
+          child: Text(
+            text,
+            style: style.copyWith(
+              color: Colors.white, 
+              fontWeight: FontWeight.w900,
+              shadows: isDark ? [] : [Shadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 2, offset: const Offset(1, 1))],
+            ),
+          ),
+        );
+
+      case 'rainbow':
+        return ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [Colors.red, Colors.orange, Colors.yellow, Colors.green, Colors.blue, Colors.purple],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ).createShader(bounds),
+          child: Text(
+            text,
+            style: style.copyWith(
+              color: Colors.white, 
+              fontWeight: FontWeight.w900,
+              shadows: isDark ? [] : [Shadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 2, offset: const Offset(1, 1))],
+            ),
+          ),
+        );
+
+      case 'glitch':
+        return Text(
+          text,
+          style: style.copyWith(
+            color: isDark ? Colors.white : Colors.black87,
+            fontWeight: FontWeight.w900,
+            shadows: [
+              const Shadow(color: Colors.redAccent, offset: Offset(-1.5, 0)),
+              const Shadow(color: Colors.cyanAccent, offset: Offset(1.5, 0)),
+            ],
+          ),
+        );
+
+      case 'bubblegum':
+        return ShaderMask(
+          shaderCallback: (bounds) => LinearGradient(
+            colors: isDark 
+                ? [Colors.pinkAccent, Colors.lightBlueAccent]
+                : [Colors.pink.shade600, Colors.blue.shade600],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ).createShader(bounds),
+          child: Text(
+            text,
+            style: style.copyWith(
+              color: Colors.white, 
+              fontWeight: FontWeight.w900,
+              shadows: isDark ? [] : [Shadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 2, offset: const Offset(1, 1))],
+            ),
+          ),
+        );
+
+      case 'ice':
+        return ShaderMask(
+          shaderCallback: (bounds) => LinearGradient(
+            colors: isDark 
+                ? [Colors.white, Colors.lightBlue.shade100, Colors.lightBlueAccent]
+                : [Colors.lightBlue.shade300, Colors.blue.shade700, Colors.indigo.shade900],
+            stops: const [0.0, 0.4, 1.0],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ).createShader(bounds),
+          child: Text(
+            text,
+            style: style.copyWith(
+              color: Colors.white, 
+              fontWeight: FontWeight.w900,
+              shadows: isDark 
+                  ? [const Shadow(color: Colors.lightBlueAccent, blurRadius: 8)] 
+                  : [Shadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 2, offset: const Offset(1, 1))],
+            ),
+          ),
+        );
+
       default:
         return Text(text, style: style);
     }

@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'ranking/cubit/ranking_cubit.dart';
 import 'ranking/cubit/ranking_state.dart';
 import 'rewards/widgets/cosmetic_name_text.dart';
+import 'rewards/widgets/cosmetic_avatar.dart';
 
 class RankingPage extends StatelessWidget {
   final String groupId;
@@ -90,6 +91,7 @@ class _RankingView extends StatelessWidget {
                     monedasHistoricas: user['monedas_historicas'] ?? 0,
                     isMe: isMe,
                     equippedStyle: user['equipped_name_style'] ?? 'default',
+                    equippedAvatar: user['equipped_avatar'] ?? 'default',
                   );
                 },
               ),
@@ -109,6 +111,7 @@ class _RankItem extends StatelessWidget {
   final int monedasHistoricas;
   final bool isMe;
   final String equippedStyle;
+  final String equippedAvatar;
 
   const _RankItem({
     required this.index,
@@ -116,6 +119,7 @@ class _RankItem extends StatelessWidget {
     required this.monedasHistoricas,
     required this.isMe,
     required this.equippedStyle,
+    required this.equippedAvatar,
   });
 
   @override
@@ -161,15 +165,10 @@ class _RankItem extends StatelessWidget {
           children: [
             rankWidget,
             const SizedBox(width: 16),
-            CircleAvatar(
-              backgroundColor: colorScheme.secondaryContainer,
-              child: Text(
-                name.isNotEmpty ? name[0].toUpperCase() : '?',
-                style: TextStyle(
-                  color: colorScheme.onSecondaryContainer,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            CosmeticAvatar(
+              avatarId: equippedAvatar,
+              name: name,
+              radius: 20,
             ),
             const SizedBox(width: 16),
             Expanded(

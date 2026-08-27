@@ -6,11 +6,13 @@ class RewardsLoaded extends RewardsState {
   final int globalCoins;
   final List<String> purchasedCosmetics;
   final String equippedStyle;
+  final String equippedAvatar;
 
   RewardsLoaded({
     required this.globalCoins,
     required this.purchasedCosmetics,
     required this.equippedStyle,
+    required this.equippedAvatar,
   });
 }
 class RewardsError extends RewardsState {

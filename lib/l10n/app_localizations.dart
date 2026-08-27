@@ -595,6 +595,222 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No tienes suficientes monedas globales.'**
   String get insufficientCoins;
+
+  /// No description provided for @cosmeticOceanName.
+  ///
+  /// In es, this message translates to:
+  /// **'Océano'**
+  String get cosmeticOceanName;
+
+  /// No description provided for @cosmeticOceanDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Profundo y sereno'**
+  String get cosmeticOceanDesc;
+
+  /// No description provided for @cosmeticRainbowName.
+  ///
+  /// In es, this message translates to:
+  /// **'Arcoíris'**
+  String get cosmeticRainbowName;
+
+  /// No description provided for @cosmeticRainbowDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Todos los colores'**
+  String get cosmeticRainbowDesc;
+
+  /// No description provided for @cosmeticGlitchName.
+  ///
+  /// In es, this message translates to:
+  /// **'Glitch'**
+  String get cosmeticGlitchName;
+
+  /// No description provided for @cosmeticGlitchDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Efecto distorsión'**
+  String get cosmeticGlitchDesc;
+
+  /// No description provided for @cosmeticBubblegumName.
+  ///
+  /// In es, this message translates to:
+  /// **'Chicle'**
+  String get cosmeticBubblegumName;
+
+  /// No description provided for @cosmeticBubblegumDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Dulce y vibrante'**
+  String get cosmeticBubblegumDesc;
+
+  /// No description provided for @cosmeticIceName.
+  ///
+  /// In es, this message translates to:
+  /// **'Hielo Polar'**
+  String get cosmeticIceName;
+
+  /// No description provided for @cosmeticIceDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Frío como el viento'**
+  String get cosmeticIceDesc;
+
+  /// No description provided for @tabNames.
+  ///
+  /// In es, this message translates to:
+  /// **'Estilos de Nombre'**
+  String get tabNames;
+
+  /// No description provided for @tabAvatars.
+  ///
+  /// In es, this message translates to:
+  /// **'Avatares Animados'**
+  String get tabAvatars;
+
+  /// No description provided for @avatarSmileName.
+  ///
+  /// In es, this message translates to:
+  /// **'Sonrisa'**
+  String get avatarSmileName;
+
+  /// No description provided for @avatarSmileDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Un clásico feliz'**
+  String get avatarSmileDesc;
+
+  /// No description provided for @avatarMoneyName.
+  ///
+  /// In es, this message translates to:
+  /// **'Billetes'**
+  String get avatarMoneyName;
+
+  /// No description provided for @avatarMoneyDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Oliendo la riqueza'**
+  String get avatarMoneyDesc;
+
+  /// No description provided for @avatarMeltingName.
+  ///
+  /// In es, this message translates to:
+  /// **'Derritiéndose'**
+  String get avatarMeltingName;
+
+  /// No description provided for @avatarMeltingDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Demasiado calor'**
+  String get avatarMeltingDesc;
+
+  /// No description provided for @avatarGrimacingName.
+  ///
+  /// In es, this message translates to:
+  /// **'Mueca'**
+  String get avatarGrimacingName;
+
+  /// No description provided for @avatarGrimacingDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Ups, lo siento!'**
+  String get avatarGrimacingDesc;
+
+  /// No description provided for @avatarCryingName.
+  ///
+  /// In es, this message translates to:
+  /// **'Llorando'**
+  String get avatarCryingName;
+
+  /// No description provided for @avatarCryingDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Lágrimas a mares'**
+  String get avatarCryingDesc;
+
+  /// No description provided for @avatarTongueName.
+  ///
+  /// In es, this message translates to:
+  /// **'Burlón'**
+  String get avatarTongueName;
+
+  /// No description provided for @avatarTongueDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Sacando la lengua'**
+  String get avatarTongueDesc;
+
+  /// No description provided for @avatarHearNoEvilName.
+  ///
+  /// In es, this message translates to:
+  /// **'Mono Sordo'**
+  String get avatarHearNoEvilName;
+
+  /// No description provided for @avatarHearNoEvilDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'No escucho nada'**
+  String get avatarHearNoEvilDesc;
+
+  /// No description provided for @avatarSeeNoEvilName.
+  ///
+  /// In es, this message translates to:
+  /// **'Mono Ciego'**
+  String get avatarSeeNoEvilName;
+
+  /// No description provided for @avatarSeeNoEvilDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'No veo nada'**
+  String get avatarSeeNoEvilDesc;
+
+  /// No description provided for @avatarSayNoEvilName.
+  ///
+  /// In es, this message translates to:
+  /// **'Mono Mudo'**
+  String get avatarSayNoEvilName;
+
+  /// No description provided for @avatarSayNoEvilDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'No digo nada'**
+  String get avatarSayNoEvilDesc;
+
+  /// No description provided for @avatarOctopusName.
+  ///
+  /// In es, this message translates to:
+  /// **'Pulpo'**
+  String get avatarOctopusName;
+
+  /// No description provided for @avatarOctopusDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Tentáculos juguetones'**
+  String get avatarOctopusDesc;
+
+  /// No description provided for @avatarTurtleName.
+  ///
+  /// In es, this message translates to:
+  /// **'Tortuga'**
+  String get avatarTurtleName;
+
+  /// No description provided for @avatarTurtleDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Lento pero seguro'**
+  String get avatarTurtleDesc;
+
+  /// No description provided for @avatarFireEmojiName.
+  ///
+  /// In es, this message translates to:
+  /// **'Fueguito'**
+  String get avatarFireEmojiName;
+
+  /// No description provided for @avatarFireEmojiDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Qué calor!'**
+  String get avatarFireEmojiDesc;
 }
 
 class _AppLocalizationsDelegate

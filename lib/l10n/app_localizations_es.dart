@@ -268,4 +268,112 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get insufficientCoins => 'No tienes suficientes monedas globales.';
+
+  @override
+  String get cosmeticOceanName => 'Océano';
+
+  @override
+  String get cosmeticOceanDesc => 'Profundo y sereno';
+
+  @override
+  String get cosmeticRainbowName => 'Arcoíris';
+
+  @override
+  String get cosmeticRainbowDesc => 'Todos los colores';
+
+  @override
+  String get cosmeticGlitchName => 'Glitch';
+
+  @override
+  String get cosmeticGlitchDesc => 'Efecto distorsión';
+
+  @override
+  String get cosmeticBubblegumName => 'Chicle';
+
+  @override
+  String get cosmeticBubblegumDesc => 'Dulce y vibrante';
+
+  @override
+  String get cosmeticIceName => 'Hielo Polar';
+
+  @override
+  String get cosmeticIceDesc => 'Frío como el viento';
+
+  @override
+  String get tabNames => 'Estilos de Nombre';
+
+  @override
+  String get tabAvatars => 'Avatares Animados';
+
+  @override
+  String get avatarSmileName => 'Sonrisa';
+
+  @override
+  String get avatarSmileDesc => 'Un clásico feliz';
+
+  @override
+  String get avatarMoneyName => 'Billetes';
+
+  @override
+  String get avatarMoneyDesc => 'Oliendo la riqueza';
+
+  @override
+  String get avatarMeltingName => 'Derritiéndose';
+
+  @override
+  String get avatarMeltingDesc => 'Demasiado calor';
+
+  @override
+  String get avatarGrimacingName => 'Mueca';
+
+  @override
+  String get avatarGrimacingDesc => '¡Ups, lo siento!';
+
+  @override
+  String get avatarCryingName => 'Llorando';
+
+  @override
+  String get avatarCryingDesc => 'Lágrimas a mares';
+
+  @override
+  String get avatarTongueName => 'Burlón';
+
+  @override
+  String get avatarTongueDesc => 'Sacando la lengua';
+
+  @override
+  String get avatarHearNoEvilName => 'Mono Sordo';
+
+  @override
+  String get avatarHearNoEvilDesc => 'No escucho nada';
+
+  @override
+  String get avatarSeeNoEvilName => 'Mono Ciego';
+
+  @override
+  String get avatarSeeNoEvilDesc => 'No veo nada';
+
+  @override
+  String get avatarSayNoEvilName => 'Mono Mudo';
+
+  @override
+  String get avatarSayNoEvilDesc => 'No digo nada';
+
+  @override
+  String get avatarOctopusName => 'Pulpo';
+
+  @override
+  String get avatarOctopusDesc => 'Tentáculos juguetones';
+
+  @override
+  String get avatarTurtleName => 'Tortuga';
+
+  @override
+  String get avatarTurtleDesc => 'Lento pero seguro';
+
+  @override
+  String get avatarFireEmojiName => 'Fueguito';
+
+  @override
+  String get avatarFireEmojiDesc => '¡Qué calor!';
 }

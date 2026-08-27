@@ -17,18 +17,20 @@ class RewardsCubit extends Cubit<RewardsState> {
 
       final response = await _supabaseClient
           .from('users')
-          .select('monedas_globales, purchased_cosmetics, equipped_name_style')
+          .select('monedas_globales, purchased_cosmetics, equipped_name_style, equipped_avatar')
           .eq('id', userId)
           .single();
 
       final coins = (response['monedas_globales'] as num?)?.toInt() ?? 0;
       final purchased = List<String>.from(response['purchased_cosmetics'] ?? ['default']);
       final equipped = response['equipped_name_style'] as String? ?? 'default';
+      final equippedAvatar = response['equipped_avatar'] as String? ?? 'default';
 
       emit(RewardsLoaded(
         globalCoins: coins,
         purchasedCosmetics: purchased,
         equippedStyle: equipped,
+        equippedAvatar: equippedAvatar,
       ));
     } catch (e) {
       emit(RewardsError(e.toString()));
