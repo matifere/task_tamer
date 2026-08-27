@@ -89,5 +89,19 @@
       }
     }
   },
-  "awesome": "¡Genial!"
+  "awesome": "¡Genial!",
+  "myGlobalCoins": "Mis Monedas Globales",
+  "equipped": "Equipado",
+  "equip": "Equipar",
+  "cosmeticDefaultName": "Básico",
+  "cosmeticDefaultDesc": "El estilo por defecto",
+  "cosmeticGoldName": "Rey Dorado",
+  "cosmeticGoldDesc": "Tu nombre brillará en oro",
+  "cosmeticHackerName": "Hacker",
+  "cosmeticHackerDesc": "Terminal verde",
+  "cosmeticNeonName": "Neón Cyberpunk",
+  "cosmeticNeonDesc": "Brillo que encandila",
+  "cosmeticFireName": "Llamas",
+  "cosmeticFireDesc": "Demuestra que estás en racha",
+  "insufficientCoins": "No tienes suficientes monedas globales."
 }

@@ -226,4 +226,46 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get awesome => '¡Genial!';
+
+  @override
+  String get myGlobalCoins => 'Mis Monedas Globales';
+
+  @override
+  String get equipped => 'Equipado';
+
+  @override
+  String get equip => 'Equipar';
+
+  @override
+  String get cosmeticDefaultName => 'Básico';
+
+  @override
+  String get cosmeticDefaultDesc => 'El estilo por defecto';
+
+  @override
+  String get cosmeticGoldName => 'Rey Dorado';
+
+  @override
+  String get cosmeticGoldDesc => 'Tu nombre brillará en oro';
+
+  @override
+  String get cosmeticHackerName => 'Hacker';
+
+  @override
+  String get cosmeticHackerDesc => 'Terminal verde';
+
+  @override
+  String get cosmeticNeonName => 'Neón Cyberpunk';
+
+  @override
+  String get cosmeticNeonDesc => 'Brillo que encandila';
+
+  @override
+  String get cosmeticFireName => 'Llamas';
+
+  @override
+  String get cosmeticFireDesc => 'Demuestra que estás en racha';
+
+  @override
+  String get insufficientCoins => 'No tienes suficientes monedas globales.';
 }

@@ -89,5 +89,19 @@
       }
     }
   },
-  "awesome": "Awesome!"
+  "awesome": "Awesome!",
+  "myGlobalCoins": "My Global Coins",
+  "equipped": "Equipped",
+  "equip": "Equip",
+  "cosmeticDefaultName": "Basic",
+  "cosmeticDefaultDesc": "The default style",
+  "cosmeticGoldName": "Golden King",
+  "cosmeticGoldDesc": "Your name will shine in gold",
+  "cosmeticHackerName": "Hacker",
+  "cosmeticHackerDesc": "Green terminal",
+  "cosmeticNeonName": "Cyberpunk Neon",
+  "cosmeticNeonDesc": "Blinding glow",
+  "cosmeticFireName": "Flames",
+  "cosmeticFireDesc": "Show that you are on fire",
+  "insufficientCoins": "You don't have enough global coins."
 }

@@ -226,4 +226,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get awesome => 'Awesome!';
+
+  @override
+  String get myGlobalCoins => 'My Global Coins';
+
+  @override
+  String get equipped => 'Equipped';
+
+  @override
+  String get equip => 'Equip';
+
+  @override
+  String get cosmeticDefaultName => 'Basic';
+
+  @override
+  String get cosmeticDefaultDesc => 'The default style';
+
+  @override
+  String get cosmeticGoldName => 'Golden King';
+
+  @override
+  String get cosmeticGoldDesc => 'Your name will shine in gold';
+
+  @override
+  String get cosmeticHackerName => 'Hacker';
+
+  @override
+  String get cosmeticHackerDesc => 'Green terminal';
+
+  @override
+  String get cosmeticNeonName => 'Cyberpunk Neon';
+
+  @override
+  String get cosmeticNeonDesc => 'Blinding glow';
+
+  @override
+  String get cosmeticFireName => 'Flames';
+
+  @override
+  String get cosmeticFireDesc => 'Show that you are on fire';
+
+  @override
+  String get insufficientCoins => 'You don\'t have enough global coins.';
 }

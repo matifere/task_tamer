@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'ranking/cubit/ranking_cubit.dart';
 import 'ranking/cubit/ranking_state.dart';
+import 'rewards/widgets/cosmetic_name_text.dart';
 
 class RankingPage extends StatelessWidget {
   final String groupId;
@@ -88,6 +89,7 @@ class _RankingView extends StatelessWidget {
                     name: user['nombre'] ?? 'Sin nombre',
                     monedasHistoricas: user['monedas_historicas'] ?? 0,
                     isMe: isMe,
+                    equippedStyle: user['equipped_name_style'] ?? 'default',
                   );
                 },
               ),
@@ -106,12 +108,14 @@ class _RankItem extends StatelessWidget {
   final String name;
   final int monedasHistoricas;
   final bool isMe;
+  final String equippedStyle;
 
   const _RankItem({
     required this.index,
     required this.name,
     required this.monedasHistoricas,
     required this.isMe,
+    required this.equippedStyle,
   });
 
   @override
@@ -172,9 +176,10 @@ class _RankItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    name,
-                    style: theme.textTheme.titleMedium?.copyWith(
+                  CosmeticNameText(
+                    text: name,
+                    styleId: equippedStyle,
+                    baseStyle: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: isMe ? FontWeight.bold : FontWeight.normal,
                     ),
                   ),

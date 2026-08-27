@@ -511,6 +511,90 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'¡Genial!'**
   String get awesome;
+
+  /// No description provided for @myGlobalCoins.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis Monedas Globales'**
+  String get myGlobalCoins;
+
+  /// No description provided for @equipped.
+  ///
+  /// In es, this message translates to:
+  /// **'Equipado'**
+  String get equipped;
+
+  /// No description provided for @equip.
+  ///
+  /// In es, this message translates to:
+  /// **'Equipar'**
+  String get equip;
+
+  /// No description provided for @cosmeticDefaultName.
+  ///
+  /// In es, this message translates to:
+  /// **'Básico'**
+  String get cosmeticDefaultName;
+
+  /// No description provided for @cosmeticDefaultDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'El estilo por defecto'**
+  String get cosmeticDefaultDesc;
+
+  /// No description provided for @cosmeticGoldName.
+  ///
+  /// In es, this message translates to:
+  /// **'Rey Dorado'**
+  String get cosmeticGoldName;
+
+  /// No description provided for @cosmeticGoldDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu nombre brillará en oro'**
+  String get cosmeticGoldDesc;
+
+  /// No description provided for @cosmeticHackerName.
+  ///
+  /// In es, this message translates to:
+  /// **'Hacker'**
+  String get cosmeticHackerName;
+
+  /// No description provided for @cosmeticHackerDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminal verde'**
+  String get cosmeticHackerDesc;
+
+  /// No description provided for @cosmeticNeonName.
+  ///
+  /// In es, this message translates to:
+  /// **'Neón Cyberpunk'**
+  String get cosmeticNeonName;
+
+  /// No description provided for @cosmeticNeonDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Brillo que encandila'**
+  String get cosmeticNeonDesc;
+
+  /// No description provided for @cosmeticFireName.
+  ///
+  /// In es, this message translates to:
+  /// **'Llamas'**
+  String get cosmeticFireName;
+
+  /// No description provided for @cosmeticFireDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Demuestra que estás en racha'**
+  String get cosmeticFireDesc;
+
+  /// No description provided for @insufficientCoins.
+  ///
+  /// In es, this message translates to:
+  /// **'No tienes suficientes monedas globales.'**
+  String get insufficientCoins;
 }
 
 class _AppLocalizationsDelegate
